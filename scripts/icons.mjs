@@ -2,16 +2,14 @@
 import { chromium } from '@playwright/test';
 const icon = (size, pad) => {
   const r = (size / 2) * pad;
-  const sw = r * 0.26;
+  const sw = r * 0.2;
   const c = size / 2;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
-  <rect width="${size}" height="${size}" fill="#5b3df5"/>
-  <g transform="rotate(-10 ${c} ${c})">
-    <circle cx="${c + r * 0.07}" cy="${c + r * 0.07}" r="${r}" fill="#17131f"/>
-    <circle cx="${c}" cy="${c}" r="${r - sw / 2}" fill="#fff" stroke="#ff4d6a" stroke-width="${sw}"/>
-    <circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="#17131f" stroke-width="${r * 0.06}"/>
-    <text x="${c}" y="${c + r * 0.2}" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="${r * 0.52}" fill="#17131f">ZTL</text>
-  </g></svg>`;
+  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#ececf0"/></linearGradient></defs>
+  <rect width="${size}" height="${size}" fill="url(#g)"/>
+  <circle cx="${c}" cy="${c + r * 0.04}" r="${r}" fill="rgba(0,0,0,0.08)"/>
+  <circle cx="${c}" cy="${c}" r="${r - sw / 2}" fill="#fff" stroke="#ff453a" stroke-width="${sw}"/>
+  <text x="${c}" y="${c + r * 0.17}" text-anchor="middle" font-family="-apple-system, Helvetica, Arial, sans-serif" font-weight="700" font-size="${r * 0.46}" fill="#1d1d1f" letter-spacing="-1">ZTL</text></svg>`;
 };
 const out = [
   ['public/icons/icon-192.png', 192, 0.84],

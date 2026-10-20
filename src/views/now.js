@@ -125,7 +125,7 @@ export function render(el) {
         <button type="button" class="tile violet" id="locate"><span class="ico">${ICON.pin}</span><div><b>Dove sono?</b><br><span>Ti dico in che zona sei</span></div></button>
         <a class="tile pink" href="#/chiedi"><span class="ico">${ICON.chat}</span><div><b>Chiedi all'AI</b><br><span>"Area C domani alle 8?"</span></div></a>
         <a class="tile yellow" href="#/mappa?cerca=1"><span class="ico">${ICON.search}</span><div><b>Cerca una via</b><br><span>E scopri se ci entri</span></div></a>
-        <a class="tile" style="background:var(--lez)" href="#/mappa"><span class="ico">${ICON.map}</span><div><b>Mappa live</b><br><span>Colorata per la tua auto</span></div></a>
+        <a class="tile green" href="#/mappa"><span class="ico">${ICON.map}</span><div><b>Mappa live</b><br><span>Colorata per la tua auto</span></div></a>
       </div>
       <section class="section">
         <div class="section-head"><h2>I miei posti</h2></div>

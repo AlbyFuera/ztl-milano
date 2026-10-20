@@ -10,7 +10,7 @@ import { personalVerdict, VERDICT_TEXT, VERDICT_TONE } from '../verdict.js';
 
 const MILANO = [45.4642, 9.19];
 const ORDER = { lez: 0, congestion: 1, ztl: 2, pedonale: 3 };
-const COLOR = { go: '#58b400', pay: '#e8a800', stop: '#ff3d5e', lez: '#5b6cff', unk: '#8f88a8' };
+const COLOR = { go: '#30d158', pay: '#ff9f0a', stop: '#ff453a', lez: '#5e5ce6', unk: '#8e8e93' };
 const VIEWBOX = '9.04,45.54,9.28,45.38';
 
 function styleFor(zone, pv) {
@@ -163,7 +163,7 @@ export function render(el, params) {
     openPlace = place;
     openZoneId = null;
     placeMarker?.remove();
-    placeMarker = L.circleMarker([place.lat, place.lng], { radius: 10, color: '#17131f', weight: 3, fillColor: '#ff8bd0', fillOpacity: 1 }).addTo(map);
+    placeMarker = L.circleMarker([place.lat, place.lng], { radius: 10, color: '#ffffff', weight: 3, fillColor: '#0a84ff', fillOpacity: 1 }).addTo(map);
     const { inside } = await locate(place.lat, place.lng, zones);
     if (disposed || openPlace !== place) return;
     place.zones = inside.map((z) => z.id);
@@ -309,7 +309,7 @@ export function render(el, params) {
         msg.innerHTML = '';
         const ll = [coords.latitude, coords.longitude];
         me?.remove();
-        me = L.circleMarker(ll, { radius: 9, color: '#17131f', weight: 3, fillColor: '#b6f23a', fillOpacity: 1 }).addTo(map);
+        me = L.circleMarker(ll, { radius: 9, color: '#ffffff', weight: 3, fillColor: '#0a84ff', fillOpacity: 1 }).addTo(map);
         map.setView(ll, 15);
         openPlaceSheet({ lat: ll[0], lng: ll[1], label: 'Sei qui' });
       },
