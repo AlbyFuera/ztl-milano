@@ -50,7 +50,7 @@ describe('POST /api/ask', () => {
     const handler = createHandler({ now: () => NOW, askClaude: null });
     const res = fakeRes();
     await handler(post(JSON.stringify({ question: 'brera' })), res);
-    expect(res.body.zoneId).toBe('brera');
+    expect(res.body.zoneId).toBe('ap-brera');
   });
 
   it('usa il veicolo passato dal client', async () => {

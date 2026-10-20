@@ -7,7 +7,8 @@ const MAX_QUESTION = 500;
 export function sanitizeVehicle(v) {
   if (!v || typeof v !== 'object' || !FUELS.has(v.fuel)) return null;
   const euro = Number.isInteger(v.euro) && v.euro >= 0 && v.euro <= 6 ? v.euro : null;
-  return { fuel: v.fuel, euro };
+  const euro6 = euro === 6 && (v.euro6 === 'abc' || v.euro6 === 'd') ? v.euro6 : null;
+  return { fuel: v.fuel, euro, euro6 };
 }
 
 function parseBody(body) {
@@ -56,6 +57,7 @@ export function createHandler({ now = () => new Date(), askClaude = null, rateLi
       zoneId: result.zoneId,
       zoneName: result.zoneName ?? null,
       text: result.text,
+      detail: result.detail ?? result.text,
       ruleText: result.text,
       sources: result.sources,
       engine: 'regole',
@@ -64,7 +66,7 @@ export function createHandler({ now = () => new Date(), askClaude = null, rateLi
     if (askClaude && result.verdict !== 'chiarire') {
       try {
         const text = await askClaude(question, result);
-        if (text && text.trim()) Object.assign(payload, { text: text.trim(), engine: 'claude' });
+        if (text && text.trim()) Object.assign(payload, { text: text.trim(), detail: text.trim(), engine: 'claude' });
       } catch {
         // Claude non disponibile: resta la risposta del motore, che è già completa.
       }

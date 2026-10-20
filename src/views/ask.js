@@ -57,7 +57,7 @@ function botHtml(a) {
   const link = a.zoneId ? `<a href="#/zona/${esc(a.zoneId)}">Apri la scheda della zona</a>` : '';
   return `<div class="msg bot">
     <p class="verdict ${esc(a.verdict)}">${esc(VERDICT_TITLE[a.verdict] ?? '')}</p>
-    <p>${esc(a.text)}</p>
+    <p>${esc(a.detail ?? a.text)}</p>
     ${link}
     ${sourcesHtml(a.sources?.slice(0, 2))}
     <p class="by">${by}${a.engine === 'locale' ? ' (senza connessione)' : ''}</p>
@@ -68,6 +68,7 @@ export function render(el, params) {
   const zoneId = params.get('zona');
   el.innerHTML = `
     <div class="view-head">
+      <span class="ai-badge">✦ Assistente ZTL</span>
       <h1>Chiedi</h1>
       <p class="muted">Scrivi zona, giorno e ora. Ti dico se puoi entrare e da quando.</p>
     </div>

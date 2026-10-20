@@ -107,3 +107,45 @@ describe('answerQuestion: qualità del testo', () => {
     expect(r.text).not.toMatch(/24:00/);
   });
 });
+
+describe('answerQuestion: orario non confermato e testo separato dal verdetto', () => {
+  const extra = [...zones, { id: 'ignota', name: 'ZTL Ignota', type: 'ztl', aliases: ['ignota'], schedule: [], scheduleUnknown: true, sources: ['https://dati.comune.milano.it/x'] }];
+  it('per una zona senza orario risponde "info" e non inventa un verdetto', () => {
+    const r = answerQuestion('posso entrare in ignota alle 10?', NOW, { zones: extra, fines });
+    expect(r.verdict).toBe('info');
+    expect(r.text).toMatch(/orari/i);
+  });
+  it('restituisce il dettaglio senza ripetere il verdetto', () => {
+    const r = ask('area c alle 18');
+    expect(r.detail).not.toMatch(/^Sì/);
+    expect(r.text.startsWith('Sì, ma a pagamento.')).toBe(true);
+  });
+  it('per un orario da Open Data aggiunge l\'avviso di verifica', () => {
+    const z = [...zones, { id: 'od', name: 'ZTL Od', type: 'ztl', aliases: ['zona od'], alwaysActive: true, verified: false, sources: ['https://dati.comune.milano.it/x'] }];
+    const r = answerQuestion('posso entrare in zona od?', NOW, { zones: z, fines });
+    expect(r.text).toMatch(/cartello/);
+  });
+});
+
+describe('answerQuestion: frasi per tipo di zona', () => {
+  const ped = [...zones, { id: 'ped', name: 'Area pedonale Prova', type: 'pedonale', aliases: ['pedonale prova'], alwaysActive: true, sources: ['https://www.comune.milano.it/x'] }];
+  it('per un\'area pedonale dice che è chiusa alle auto', () => {
+    const r = answerQuestion('posso entrare in pedonale prova?', NOW, { zones: ped, fines });
+    expect(r.verdict).toBe('no');
+    expect(r.text).toMatch(/chiusa alle auto/);
+  });
+  it('usa la versione breve delle istruzioni di pagamento se c\'è', () => {
+    const z = zones.map((x) => (x.id === 'area-c' ? { ...x, payment: 'lungo '.repeat(50), paymentShort: 'Paga il ticket entro domani.' } : x));
+    const r = answerQuestion('area c alle 18', NOW, { zones: z, fines });
+    expect(r.text).toMatch(/Paga il ticket entro domani\./);
+    expect(r.text).not.toMatch(/lungo/);
+  });
+});
+
+describe('answerQuestion: note per alimentazione', () => {
+  it('per un\'ibrida in Area C ricorda la regola dei 100 g/km', () => {
+    const z = zones.map((x) => (x.id === 'area-c' ? { ...x, fuelNotes: { ibrido: 'Ibride fino a 100 g/km gratis.' } } : x));
+    const r = answerQuestion('ho un\'auto ibrida, area c alle 11', NOW, { zones: z, fines });
+    expect(r.text).toMatch(/100 g\/km/);
+  });
+});

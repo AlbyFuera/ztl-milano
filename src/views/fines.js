@@ -24,11 +24,11 @@ export function render(el) {
       </div>
 
       <section class="amounts">
-        <div class="card"><p class="small muted">Se paghi entro ${t.reducedDays} giorni</p><p class="amount">${euro(r.reduced)}</p></div>
-        <div class="card"><p class="small muted">Entro ${t.payDays} giorni</p><p class="amount">${euro(t.min)}</p></div>
-        <div class="card"><p class="small muted">Dopo ${t.payDays} giorni</p><p class="amount">${euro(r.late)}</p></div>
+        <div class="amount-tile"><p>Entro ${t.reducedDays} giorni</p><p class="amount">${euro(r.reduced)}</p></div>
+        <div class="amount-tile"><p>Entro ${t.payDays} giorni</p><p class="amount">${euro(t.min)}</p></div>
+        <div class="amount-tile"><p>Dopo ${t.payDays} giorni</p><p class="amount">${euro(r.late)}</p></div>
       </section>
-      <p class="small muted" style="margin-top:8px">${esc(t.summary)} Agli importi si aggiungono le spese di notifica indicate sul verbale.</p>
+      <p class="small muted" style="margin-top:12px">${esc(t.summary)} Agli importi si aggiungono le spese di notifica indicate sul verbale.</p>
       ${sourcesHtml(t.sources)}
 
       <section class="section card">

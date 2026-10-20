@@ -10,8 +10,8 @@ import { esc, signHtml, sourcesHtml } from '../ui.js';
 
 const MILANO = [45.4642, 9.19];
 const ORDER = { lez: 0, congestion: 1, ztl: 2, pedonale: 3 };
-const TYPE_COLOR = { lez: '#1F4E9C', congestion: '#B98900', ztl: '#C8102E', pedonale: '#7A2E8C' };
-const FREE = '#1E7A46';
+const TYPE_COLOR = { lez: '#5b6cff', congestion: '#e0a800', ztl: '#ff4d6a', pedonale: '#c43cff' };
+const FREE = '#5ea400';
 
 function styleFor(zone, active) {
   const color = TYPE_COLOR[zone.type] ?? '#1C232B';
@@ -146,7 +146,7 @@ export function render(el) {
         msg.innerHTML = '';
         const ll = [coords.latitude, coords.longitude];
         me?.remove();
-        me = L.circleMarker(ll, { radius: 8, color: '#fff', weight: 3, fillColor: '#1F4E9C', fillOpacity: 1 }).addTo(map);
+        me = L.circleMarker(ll, { radius: 9, color: '#17131f', weight: 3, fillColor: '#b6f23a', fillOpacity: 1 }).addTo(map);
         map.setView(ll, 15);
       },
       () => { msg.innerHTML = '<p class="notice">Posizione non concessa. Puoi attivarla dalle impostazioni del browser.</p>'; },

@@ -78,7 +78,11 @@ function intervals(zone, fromYmd, days) {
 
 const HORIZON_DAYS = 21;
 
+const UNKNOWN_REASON = 'orari non disponibili nelle fonti ufficiali consultate';
+const DAY_NAMES = ['il lunedì', 'il martedì', 'il mercoledì', 'il giovedì', 'il venerdì', 'il sabato', 'la domenica'];
+
 export function isActiveAt(zone, date) {
+  if (zone.scheduleUnknown) return null;
   if (zone.alwaysActive) return true;
   const p = romeParts(date);
   return windowsForDay(zone, p).some(([a, b]) => p.minutesOfDay >= a && p.minutesOfDay < b);
@@ -87,6 +91,9 @@ export function isActiveAt(zone, date) {
 export function zoneStatus(zone, date) {
   const p = romeParts(date);
   const todayWindows = windowsForDay(zone, p).map(([a, b]) => ({ from: formatHHMM(a), to: b === 1440 ? '24:00' : formatHHMM(b) }));
+  if (zone.scheduleUnknown) {
+    return { active: null, reason: UNKNOWN_REASON, nextChange: null, todayWindows: [], currentWindow: null };
+  }
   if (zone.alwaysActive) {
     return { active: true, reason: 'Sempre attiva, 24 ore su 24', nextChange: null, todayWindows, currentWindow: null };
   }
@@ -104,7 +111,7 @@ export function zoneStatus(zone, date) {
   }
   const next = list.find(([a]) => a > t);
   const off = dayOffReason(zone, p);
-  const reason = off ?? (todayWindows.length ? 'Fuori dalla fascia oraria di oggi' : 'Oggi non è attiva');
+  const reason = off ?? (todayWindows.length ? 'fuori dalla fascia oraria' : `${DAY_NAMES[p.weekday - 1]} non è attiva`);
   return { active: false, reason, nextChange: next ? new Date(next[0]) : null, todayWindows, currentWindow: null };
 }
 

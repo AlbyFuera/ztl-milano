@@ -31,8 +31,17 @@ function validTime(h, m) {
   return h >= 0 && h <= 24 && m >= 0 && m <= 59 && !(h === 24 && m > 0);
 }
 
+const MONTHS = {
+  gennaio: 1, gen: 1, febbraio: 2, feb: 2, marzo: 3, mar: 3, aprile: 4, apr: 4, maggio: 5, mag: 5, giugno: 6, giu: 6,
+  luglio: 7, lug: 7, agosto: 8, ago: 8, settembre: 9, sett: 9, set: 9, ottobre: 10, ott: 10, novembre: 11, nov: 11, dicembre: 12, dic: 12,
+};
+const MONTH_RE = new RegExp(`\\b(\\d{1,2})\\s+(${Object.keys(MONTHS).join('|')})\\b(?:\\s+(\\d{4}))?`);
+
 function extractDate(t, today) {
-  const m = t.match(/\b(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?\b/);
+  const named = t.match(MONTH_RE);
+  const m = named
+    ? [named[0], named[1], String(MONTHS[named[2]]), named[3]]
+    : t.match(/\b(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?\b/);
   if (!m) return { rest: t, ymd: null };
   const day = Number(m[1]);
   const month = Number(m[2]);
@@ -103,16 +112,18 @@ const FUELS = [
 
 export function extractVehicle(t) {
   const fuel = FUELS.find(([, re]) => re.test(t))?.[0] ?? null;
-  const m = t.match(/\beuro\s?([0-6])\b/);
+  const m = t.match(/\beuro\s?([0-6])\s?(d\s?temp|d|a|b|c)?\b/);
   const euro = m ? Number(m[1]) : null;
   if (!fuel && euro === null) return null;
+  if (euro === 6 && m[2]) return { fuel, euro, euro6: m[2].startsWith('d') ? 'd' : 'abc' };
   return { fuel, euro };
 }
 
-function detectIntent(t, hasZone, whenExplicit) {
+function detectIntent(t, hasZone, whenExplicit, hasVehicle) {
   if (/\b(mult|sanzion|verbal|ricors|contravvenz)/.test(t)) return 'fine';
   if (/\b(uscir|esco|uscita)/.test(t)) return 'exit';
   if (/\b(entrar|entro|accedere|accesso|passar|passo|transitar|andare|vado|posso|si puo)/.test(t)) return 'enter';
+  if (hasVehicle) return 'enter';
   if (/\b(orar|quando|attiv|apre|chiude|fino a)/.test(t)) return 'hours';
   if (!hasZone && !whenExplicit) return 'unknown';
   return whenExplicit ? 'enter' : 'hours';
@@ -122,7 +133,7 @@ export function parseQuestion(text, now, zones) {
   const today = romeParts(now);
   const normalized = normalize(text);
   const vehicle = extractVehicle(normalized);
-  const { rest, ymd: dateYmd } = extractDate(normalized.replace(/\beuro\s?\d\b/g, ' '), today);
+  const { rest, ymd: dateYmd } = extractDate(normalized.replace(/\beuro\s?\d\s?(d\s?temp|d|a|b|c)?\b/g, ' '), today);
   const dayYmd = dateYmd ?? extractDay(rest, today);
   let time = extractTime(rest);
   const timeExplicit = Boolean(time);
@@ -140,5 +151,5 @@ export function parseQuestion(text, now, zones) {
   }
   const whenExplicit = Boolean(dayYmd || time);
   const zoneId = findZone(text, zones);
-  return { zoneId, when, whenExplicit, timeExplicit, vehicle, intent: detectIntent(rest, Boolean(zoneId), whenExplicit) };
+  return { zoneId, when, whenExplicit, timeExplicit, vehicle, intent: detectIntent(rest, Boolean(zoneId), whenExplicit, Boolean(vehicle)) };
 }

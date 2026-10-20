@@ -101,3 +101,27 @@ describe('parseQuestion: veicolo', () => {
     expect(at('area c alle 10').vehicle).toBeNull();
   });
 });
+
+describe('parseQuestion: sottoclasse Euro 6', () => {
+  it('riconosce Euro 6D, 6 d-temp e 6b', () => {
+    expect(at('diesel euro 6d in area b').vehicle).toEqual({ fuel: 'diesel', euro: 6, euro6: 'd' });
+    expect(at('diesel euro 6 d-temp area b').vehicle).toEqual({ fuel: 'diesel', euro: 6, euro6: 'd' });
+    expect(at('diesel euro 6b area c').vehicle).toEqual({ fuel: 'diesel', euro: 6, euro6: 'abc' });
+  });
+});
+
+describe('parseQuestion: date col nome del mese', () => {
+  it('"il 7 dicembre alle 10" è il 7 dicembre', () => {
+    expect(at('area c il 7 dicembre alle 10').p).toMatchObject({ month: 12, day: 7, hour: 10 });
+  });
+  it('"1 gennaio" va all\'anno dopo se è già passato', () => {
+    expect(at('area c 1 gennaio alle 9').p).toMatchObject({ year: 2027, month: 1, day: 1, hour: 9 });
+  });
+  it('accetta "1° maggio" e "25 apr"', () => {
+    expect(at('area c il 1° maggio alle 9').p).toMatchObject({ month: 5, day: 1 });
+    expect(at('area c 25 apr alle 9').p).toMatchObject({ month: 4, day: 25 });
+  });
+  it('se nomini il veicolo stai chiedendo se puoi entrare', () => {
+    expect(at('diesel euro 6 area b').intent).toBe('enter');
+  });
+});

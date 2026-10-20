@@ -1,0 +1,2789 @@
+{
+  "updated": "2026-10-20",
+  "conventions": {
+    "days": "1=lun ... 7=dom",
+    "overnight": "se to < from la fascia termina il giorno dopo",
+    "unverified": "true = non confermato su fonte ufficiale o dato possibilmente non aggiornato"
+  },
+  "zones": [
+    {
+      "id": "area-c",
+      "name": "Area C (ZTL Cerchia dei Bastioni)",
+      "type": "congestion",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AREA_C",
+        "id_amat": 276
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "from": "07:30",
+          "to": "19:30"
+        }
+      ],
+      "schedule_notes": [
+        {
+          "text": "Attiva tutto l'anno dal lunedi al venerdi 7:30-19:30, festivi esclusi (quindi attiva anche ad agosto).",
+          "source": "https://www.comune.milano.it/argomenti/mobilita/area-c"
+        },
+        {
+          "text": "Non attiva sabato, domenica e festivi.",
+          "source": "https://areac.atm-mi.it/Areac/IWeb/English.aspx"
+        }
+      ],
+      "varchi": {
+        "count": 43,
+        "tpl_only": 6,
+        "permit_only": 1,
+        "text": "Delimitata da 43 varchi elettronici con telecamera, di cui 6 dedicati al solo trasporto pubblico e 1 solo ai muniti di permesso.",
+        "source": "https://areac.atm-mi.it/Areac/IWeb/FAQ2.aspx",
+        "opendata_points": 42,
+        "opendata_note": "Il dataset ds82 contiene 42 punti (varchi Area C + varchi TPL): uno in meno dei 43 dichiarati nelle FAQ."
+      },
+      "cost": {
+        "in_force_since": "2023-10-30",
+        "ordinary_eur": 7.5,
+        "residents": {
+          "free_transits_per_year": 50,
+          "from_51st_eur": 3.0,
+          "since": "2024-01-01",
+          "requires_registration": true,
+          "source": "https://www.comune.milano.it/servizi/mobilita/area-c-agevolazioni-per-residenti-ed-equiparati"
+        },
+        "service_vehicles_eur": 4.5,
+        "garage_parking_eur": 4.5,
+        "late_within_7_days_eur": 22.5,
+        "ncc_over_9_seats_eur": [
+          {
+            "length": "<= 8.00 m",
+            "eur": 60.0
+          },
+          {
+            "length": "8.01-10.50 m",
+            "eur": 97.5
+          },
+          {
+            "length": "> 10.50 m",
+            "eur": 150.0
+          },
+          {
+            "note": "gite scolastiche (scuola secondaria di primo grado e inferiori)",
+            "eur": 7.5
+          },
+          {
+            "note": "casa-scuola, <= 8 m / 8.01-10.50 m / > 10.50 m",
+            "eur": [
+              22.5,
+              37.5,
+              60.0
+            ]
+          }
+        ],
+        "validity": "Ticket giornaliero: copre tutti gli ingressi dello stesso veicolo nella stessa giornata, dal primo accesso fino alle 19:30.",
+        "sources": [
+          "https://www.comune.milano.it/documents/20118/35188/Area+C+nuove+tariffe+dal+2023+Area+C.pdf/5ee21a73-7301-60c7-d2fe-5e2f77e8a158?version=1.0&t=1746021538283&download=true",
+          "https://www.comune.milano.it/servizi/mobilita/area-c-acquista-il-ticket",
+          "https://areac.atm-mi.it/Areac/IWeb/FAQ2.aspx"
+        ]
+      },
+      "payment": {
+        "deadline": "Attivazione dal giorno dell'accesso entro le 24:00 del giorno successivo. Ticket delle autorimesse convenzionate (e NCC gita scolastica): entro le 24:00 dello stesso giorno. Attivazioni fatte il giorno prima dell'accesso non valgono (salvo credito su targa registrata in MyAreaC).",
+        "late": "Oltre il termine: ticket differito da 22,50 euro entro le 24:00 del 7 giorno successivo, solo da MyAreaC (funzione 'Entro 7 giorni', targa registrata).",
+        "channels": [
+          "online su areac.atm-mi.it (attivazione online senza registrazione)",
+          "bancomat abilitati Intesa Sanpaolo",
+          "parcometri",
+          "terminali SISAL; tabaccherie PUNTOLIS, edicole o bar convenzionati LIS Pay",
+          "Telepass (solo veicoli immatricolati in Italia)",
+          "UnipolMove",
+          "PayPal",
+          "RID (solo chi l'ha attivato entro il 14/09/2012)",
+          "autorimesse convenzionate (ticket 4,50 euro)",
+          "telefono 02 4868 4001, tutti i giorni 7:00-24:00",
+          "Infopoint AreaB/AreaC c/o Duomo M1/M3 (attivazione, su appuntamento via app)"
+        ],
+        "sms": {
+          "value": null,
+          "unverified": true,
+          "note": "Nessun canale SMS indicato nelle pagine ufficiali consultate."
+        },
+        "sources": [
+          "https://www.comune.milano.it/servizi/mobilita/area-c-acquista-il-ticket",
+          "https://www.comune.milano.it/servizi/mobilita/area-c-attiva-il-ticket",
+          "https://areac.atm-mi.it/Areac/IWeb/FAQ2.aspx"
+        ]
+      },
+      "exit_rule": {
+        "text": "Le telecamere rilevano solo le targhe in entrata: nessun addebito all'uscita. La disciplina vieta pero ai veicoli non ammessi anche la circolazione dinamica all'interno e verso l'esterno.",
+        "source": "https://areac.atm-mi.it/Areac/IWeb/FAQ2.aspx"
+      },
+      "bans": {
+        "length": {
+          "text": "Vietati i veicoli di lunghezza superiore a 7,5 metri (deroghe su richiesta, modulo 1, entro le 24 di due giorni prima).",
+          "sources": [
+            "https://areac.atm-mi.it/Areac/IWeb/FAQ2.aspx",
+            "https://www.comune.milano.it/servizi/mobilita/area-c-deroghe-per-veicoli-superiori-a-7-5-metri"
+          ]
+        },
+        "goods_hours": {
+          "text": "Vietati i veicoli per trasporto cose dalle 8:00 alle 10:00 (deroghe specifiche; veicoli elettrici, isotermici, autofunebri e corrieri registrati non devono chiederla). Dal 1/10/2023 anche gli ibridi M2, M3, N1, N2, N3 servono la deroga 8-10.",
+          "schedule": [
+            {
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "from": "08:00",
+              "to": "10:00"
+            }
+          ],
+          "sources": [
+            "https://areac.atm-mi.it/Areac/IWeb/FAQ2.aspx",
+            "https://www.comune.milano.it/servizi/mobilita/area-c-deroga-per-trasporto-merci-8-00-10-00",
+            "https://www.comune.milano.it/servizi/mobilita/area-c-agevolazioni-per-imprese-con-veicoli-di-servizio"
+          ]
+        },
+        "environmental_calendar_source": "https://www.comune.milano.it/argomenti/mobilita/area-c-calendario-dei-divieti",
+        "environmental": {
+          "autoveicoli_trasporto_persone": [
+            {
+              "from": "in_force",
+              "vehicles": [
+                "benzina Euro 0, 1, 2",
+                "diesel Euro 0-5 (tutti, con o senza FAP)",
+                "doppia alimentazione gasolio-GPL / gasolio-metano Euro 0-4"
+              ]
+            },
+            {
+              "from": "2024-10-01",
+              "vehicles": [
+                "benzina Euro 3"
+              ]
+            },
+            {
+              "from": "2027-10-01",
+              "vehicles": [
+                "benzina Euro 4"
+              ]
+            },
+            {
+              "from": "2028-10-01",
+              "vehicles": [
+                "diesel Euro 6 A-B-C"
+              ]
+            },
+            {
+              "from": "2029-10-01",
+              "vehicles": [
+                "diesel Euro 6 D-TEMP",
+                "diesel Euro 6 D"
+              ]
+            },
+            {
+              "from": "2030-10-01",
+              "vehicles": [
+                "benzina Euro 5"
+              ]
+            }
+          ],
+          "autoveicoli_residenti_ed_equiparati": [
+            {
+              "from": "in_force",
+              "vehicles": [
+                "benzina Euro 0, 1, 2",
+                "diesel Euro 0-5",
+                "doppia alimentazione gasolio-GPL / gasolio-metano Euro 0-4"
+              ]
+            },
+            {
+              "from": "2025-10-01",
+              "vehicles": [
+                "benzina Euro 3"
+              ]
+            },
+            {
+              "from": "2028-10-01",
+              "vehicles": [
+                "benzina Euro 4",
+                "diesel Euro 6 A-B-C"
+              ]
+            },
+            {
+              "from": "2030-10-01",
+              "vehicles": [
+                "diesel Euro 6 D-TEMP",
+                "diesel Euro 6 D"
+              ]
+            }
+          ],
+          "autoveicoli_trasporto_cose": [
+            {
+              "from": "in_force",
+              "vehicles": [
+                "benzina Euro 0, 1",
+                "diesel leggeri Euro 0-4 senza FAP (e con FAP secondo valori V.5)",
+                "diesel pesanti Euro 0-IV senza FAP",
+                "doppia alimentazione Euro 0-4"
+              ]
+            },
+            {
+              "from": "2023-10-01",
+              "vehicles": [
+                "benzina Euro 2",
+                "diesel leggeri N1 Euro 5",
+                "diesel pesanti Euro V senza FAP (e con FAP secondo V.5)"
+              ]
+            },
+            {
+              "from": "2025-10-01",
+              "vehicles": [
+                "benzina Euro 3"
+              ]
+            },
+            {
+              "from": "2028-10-01",
+              "vehicles": [
+                "benzina Euro 4",
+                "diesel leggeri Euro 6 A-B-C"
+              ]
+            },
+            {
+              "from": "2030-10-01",
+              "vehicles": [
+                "benzina Euro 5",
+                "diesel leggeri Euro 6 D-TEMP / D",
+                "diesel pesanti Euro V con FAP (V.5 <= 0,01)",
+                "diesel pesanti Euro VI (derogati fino al 20 anno se immatricolati entro 31/12/2020, fino al 17 anno se 2021-2025)"
+              ]
+            }
+          ],
+          "motoveicoli_ciclomotori": [
+            {
+              "from": "in_force",
+              "vehicles": [
+                "due tempi Euro 0, 1",
+                "gasolio Euro 0, 1"
+              ]
+            },
+            {
+              "from": "2027-10-01",
+              "vehicles": [
+                "due tempi Euro 2, 3",
+                "gasolio Euro 2, 3",
+                "benzina quattro tempi Euro 0, 1, 2"
+              ],
+              "dated_change": "Rinviato al 1/10/2027 da DGC 140 del 12/02/2026 e Ordinanza 373 del 17/02/2026.",
+              "change_source": "https://www.comune.milano.it/documents/d/guest/ordinanza-n-373-del-17022026-pdf?download=true"
+            },
+            {
+              "from": "2028-10-01",
+              "vehicles": [
+                "benzina quattro tempi Euro 3"
+              ]
+            },
+            {
+              "from": "2030-10-01",
+              "vehicles": [
+                "due tempi Euro 4",
+                "gasolio Euro 4, 5"
+              ]
+            }
+          ],
+          "autobus": [
+            {
+              "from": "in_force",
+              "vehicles": [
+                "benzina Euro 0, I",
+                "diesel Euro 0-IV senza FAP e varianti FAP",
+                "doppia alimentazione Euro 0-IV"
+              ]
+            },
+            {
+              "from": "2023-10-01",
+              "vehicles": [
+                "benzina Euro II",
+                "diesel Euro V senza FAP e varianti"
+              ]
+            },
+            {
+              "from": "2025-10-01",
+              "vehicles": [
+                "benzina Euro III"
+              ]
+            },
+            {
+              "from": "2028-10-01",
+              "vehicles": [
+                "benzina Euro IV"
+              ]
+            },
+            {
+              "from": "2029-10-01",
+              "vehicles": [
+                "diesel Euro V con FAP di serie V.5 <= 0,01",
+                "diesel Euro VI (con deroghe per eta)"
+              ]
+            },
+            {
+              "from": "2030-10-01",
+              "vehicles": [
+                "benzina Euro V"
+              ]
+            }
+          ],
+          "trasporto_specifico_uso_speciale": {
+            "text": "Diesel Euro 0-6 con FAP derogati fino al 30/09/2029; dal 1/10/2029 soggetti al divieto (Euro 6-VI derogati almeno fino al 17 anno).",
+            "source": "https://www.comune.milano.it/argomenti/mobilita/area-c-calendario-dei-divieti"
+          },
+          "note": "Sintesi del calendario ufficiale: le condizioni FAP/campo V.5 sono riportate per esteso sulla pagina sorgente."
+        }
+      },
+      "exceptions": [
+        {
+          "text": "Veicoli elettrici: ingresso gratuito.",
+          "source": "https://areac.atm-mi.it/Areac/IWeb/English.aspx"
+        },
+        {
+          "text": "Autovetture ibride (campo P.3) con CO2 (campo V.7) <= 100 g/km: ingresso gratuito.",
+          "source": "https://areac.atm-mi.it/Areac/IWeb/FAQ2.aspx"
+        },
+        {
+          "text": "Ibridi M2, M3, N1, N2, N3: pagano il ticket dal 1/10/2023.",
+          "source": "https://www.comune.milano.it/servizi/mobilita/area-c-agevolazioni-per-imprese-con-veicoli-di-servizio"
+        },
+        {
+          "text": "Motoveicoli e ciclomotori: esentati dal pagamento, salvo quelli vietati (due tempi e gasolio Euro 0-1).",
+          "source": "https://areac.atm-mi.it/Areac/IWeb/FAQ2.aspx"
+        },
+        {
+          "text": "Veicoli con contrassegno disabili (CUDE) con titolare a bordo e targa registrata: accesso ad Area C, esenzioni e deroghe.",
+          "source": "https://www.comune.milano.it/servizi/mobilita/ingressi-in-area-b-e-area-c-corsie-riservate-ztl-per-titolari-di-contrassegno-disabili"
+        },
+        {
+          "text": "Veicoli storici: con CRS e almeno 40 anni derogati dal divieto e dal pagamento; tra 20 e 40 anni 25 giornate/anno in deroga pagando il ticket (registrazione MyAreaC).",
+          "source": "https://areab.atm.it/it-IT/Web/FAQ"
+        },
+        {
+          "text": "Esenzione per taxi e NCC fino a 9 posti (pagina dedicata tra le esenzioni).",
+          "source": "https://areac.atm-mi.it/Areac/IWeb/FAQ.aspx"
+        },
+        {
+          "text": "Altre agevolazioni/deroghe: motivi di salute, operatori sociali e sanitari, assistenza socio-sanitaria no profit (rimborso), salvaguardia animali, farmaci urgenti.",
+          "source": "https://www.comune.milano.it/argomenti/mobilita/area-c"
+        }
+      ],
+      "access": "A pagamento (ticket giornaliero) per i veicoli ammessi; vietato per classi ambientali in divieto, veicoli > 7,5 m e trasporto cose 8-10 senza deroga.",
+      "fines": {
+        "text": "Nessun importo specifico per il mancato pagamento trovato sulle pagine del Comune. Trattandosi di ZTL, la norma generale e l'art. 7 c.14 CdS (83-332 euro): vedi fines.ztl_access.",
+        "unverified": true,
+        "source": "https://www.normattiva.it/atto/caricaArticolo?art.versione=31&art.idGruppo=1&art.flagTipoArticolo=0&art.codiceRedazionale=092G0306&art.idArticolo=7&art.idSottoArticolo=1&art.idSottoArticolo1=10&art.dataPubblicazioneGazzetta=1992-05-18&art.progressivo=0"
+      },
+      "notes": [
+        {
+          "text": "Regole di Area C recentemente modificate: DGC 140/2026 e Ordinanza 373/2026 (rinvio divieti moto al 1/10/2027).",
+          "source": "https://www.comune.milano.it/argomenti/mobilita/area-c"
+        }
+      ],
+      "sources": [
+        "https://www.comune.milano.it/argomenti/mobilita/area-c",
+        "https://www.comune.milano.it/argomenti/mobilita/area-c-calendario-dei-divieti",
+        "https://www.comune.milano.it/servizi/mobilita/area-c-acquista-il-ticket",
+        "https://www.comune.milano.it/servizi/mobilita/area-c-attiva-il-ticket",
+        "https://www.comune.milano.it/documents/20118/35188/Area+C+nuove+tariffe+dal+2023+Area+C.pdf/5ee21a73-7301-60c7-d2fe-5e2f77e8a158?version=1.0&t=1746021538283&download=true",
+        "https://www.comune.milano.it/servizi/mobilita/area-c-agevolazioni-per-residenti-ed-equiparati",
+        "https://www.comune.milano.it/servizi/mobilita/area-c-agevolazioni-per-imprese-con-veicoli-di-servizio",
+        "https://www.comune.milano.it/servizi/mobilita/area-c-deroga-per-trasporto-merci-8-00-10-00",
+        "https://www.comune.milano.it/servizi/mobilita/area-c-deroghe-per-veicoli-superiori-a-7-5-metri",
+        "https://areac.atm-mi.it/Areac/IWeb/FAQ2.aspx",
+        "https://areac.atm-mi.it/Areac/IWeb/English.aspx",
+        "https://www.comune.milano.it/documents/d/guest/ordinanza-n-373-del-17022026-pdf?download=true"
+      ]
+    },
+    {
+      "id": "area-b",
+      "name": "Area B (low emission zone)",
+      "type": "lez",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AREA_B",
+        "id_amat": 277
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "from": "07:30",
+          "to": "19:30"
+        }
+      ],
+      "schedule_notes": [
+        {
+          "text": "Attiva dal lunedi al venerdi 7:30-19:30, festivi esclusi. Non attiva sabato e festivi.",
+          "source": "https://www.comune.milano.it/argomenti/mobilita/area-b"
+        },
+        {
+          "text": "Per i veicoli che trasportano merci pericolose Area B e attiva h24, 7 giorni su 7.",
+          "source": "https://www.comune.milano.it/documents/20118/808719/Area+B_volantino+25_5.pdf/aa35b5f0-e692-32b5-e3e7-265bf758e61b?version=1.2&t=1790773122597&download=true",
+          "schedule": [
+            {
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ],
+              "from": "00:00",
+              "to": "24:00"
+            }
+          ]
+        },
+        {
+          "text": "Si puo entrare prima delle 7:30 con un veicolo in divieto, ma dalle 7:30 alle 19:30 non si puo circolare all'interno ne verso l'esterno.",
+          "source": "https://areab.atm.it/it-IT/Web/FAQ"
+        }
+      ],
+      "varchi": {
+        "count": 186,
+        "text": "Delimitata da 186 varchi d'accesso.",
+        "source": "https://areab.atm.it/it-IT/Web/FAQ",
+        "opendata_points": 188,
+        "opendata_note": "Il dataset ds959 (dati del 2023-11-07) ha 188 punti: 149 ATTIVI E SANZIONANTI, 22 IN PRE-ESERCIZIO, 17 DA PROGRAMMARE PRE-ESERCIZIO."
+      },
+      "cost": 0,
+      "cost_note": {
+        "text": "Ai veicoli ammessi non e richiesto alcun pagamento.",
+        "source": "https://www.comune.milano.it/argomenti/mobilita/area-b"
+      },
+      "payment": null,
+      "exit_rule": {
+        "text": "Le telecamere rilevano solo le targhe in entrata, ma e vietata la circolazione dinamica (movimento e fermata, sosta esclusa) all'interno e verso l'esterno.",
+        "source": "https://areab.atm.it/it-IT/Web/FAQ"
+      },
+      "bans": {
+        "environmental_calendar_source": "https://www.comune.milano.it/argomenti/mobilita/area-b-calendario-dei-divieti",
+        "environmental": {
+          "autoveicoli_trasporto_persone": [
+            {
+              "from": "in_force",
+              "vehicles": [
+                "benzina Euro 0, 1, 2",
+                "diesel Euro 0-5 (tutti)",
+                "doppia alimentazione gasolio-GPL / gasolio-metano Euro 0-4"
+              ]
+            },
+            {
+              "from": "2025-10-01",
+              "vehicles": [
+                "benzina Euro 3"
+              ]
+            },
+            {
+              "from": "2028-10-01",
+              "vehicles": [
+                "benzina Euro 4",
+                "diesel Euro 6 A-B-C"
+              ]
+            },
+            {
+              "from": "2030-10-01",
+              "vehicles": [
+                "diesel Euro 6 D-TEMP",
+                "diesel Euro 6 D"
+              ]
+            }
+          ],
+          "autoveicoli_trasporto_cose": [
+            {
+              "from": "in_force",
+              "vehicles": [
+                "benzina Euro 0, 1",
+                "diesel leggeri N1 Euro 0-4 (con varianti FAP/V.5)",
+                "diesel pesanti N2-N3 Euro 0-IV",
+                "doppia alimentazione Euro 0-4"
+              ]
+            },
+            {
+              "from": "2024-10-01",
+              "vehicles": [
+                "benzina Euro 2",
+                "diesel leggeri N1 Euro 5",
+                "diesel pesanti Euro V senza FAP (e varianti V.5)"
+              ]
+            },
+            {
+              "from": "2025-10-01",
+              "vehicles": [
+                "benzina Euro 3"
+              ]
+            },
+            {
+              "from": "2028-10-01",
+              "vehicles": [
+                "benzina Euro 4",
+                "diesel leggeri N1 Euro 6 A-B-C"
+              ]
+            },
+            {
+              "from": "2030-10-01",
+              "vehicles": [
+                "diesel leggeri N1 Euro 6 D-TEMP / D",
+                "diesel pesanti Euro V con FAP (V.5 <= 0,01)",
+                "diesel pesanti Euro VI (derogati fino al 20 anno se immatricolati entro 31/12/2020, fino al 14 anno se 2021-2025)"
+              ]
+            }
+          ],
+          "motoveicoli_ciclomotori": [
+            {
+              "from": "in_force",
+              "vehicles": [
+                "due tempi Euro 0, 1",
+                "gasolio Euro 0, 1"
+              ]
+            },
+            {
+              "from": "2027-10-01",
+              "vehicles": [
+                "due tempi Euro 2, 3",
+                "gasolio Euro 2, 3",
+                "benzina quattro tempi Euro 0, 1, 2"
+              ],
+              "dated_change": "Rinviato al 1/10/2027 da DGC 140 del 12/02/2026 e Ordinanza 373 del 17/02/2026.",
+              "change_source": "https://www.comune.milano.it/documents/d/guest/ordinanza-n-373-del-17022026-pdf?download=true"
+            },
+            {
+              "from": "2028-10-01",
+              "vehicles": [
+                "benzina quattro tempi Euro 3"
+              ]
+            },
+            {
+              "from": "2030-10-01",
+              "vehicles": [
+                "due tempi Euro 4",
+                "gasolio Euro 4, 5"
+              ]
+            }
+          ],
+          "autobus": [
+            {
+              "from": "in_force",
+              "vehicles": [
+                "benzina Euro 0, I",
+                "diesel Euro 0-IV (con varianti FAP)",
+                "doppia alimentazione Euro 0-IV"
+              ]
+            },
+            {
+              "from": "2024-10-01",
+              "vehicles": [
+                "benzina Euro II",
+                "diesel Euro V senza FAP e varianti"
+              ]
+            },
+            {
+              "from": "2025-10-01",
+              "vehicles": [
+                "benzina Euro III"
+              ]
+            },
+            {
+              "from": "2028-10-01",
+              "vehicles": [
+                "benzina Euro IV"
+              ]
+            },
+            {
+              "from": "2030-10-01",
+              "vehicles": [
+                "diesel Euro V con FAP (V.5 <= 0,01)",
+                "diesel Euro VI (derogati per eta: 20 anni se <= 2020, 14 anni se 2021-2025)"
+              ]
+            }
+          ],
+          "trasporto_specifico_uso_speciale": {
+            "text": "Diesel Euro 0-6 con FAP (o con certificata impossibilita di installarlo, su deroga) possono entrare fino al 30/09/2030; Euro 6-VI derogati almeno fino al 17 anno.",
+            "source": "https://www.comune.milano.it/argomenti/mobilita/area-b-calendario-dei-divieti"
+          },
+          "step_2026_10_01": {
+            "text": "Nel calendario attuale non c'e alcun nuovo divieto ambientale al 1 ottobre 2026 (i gradini sono 1/10/2024, 1/10/2025, 1/10/2027 per le moto, 1/10/2028, 1/10/2030). La novita del 1/10/2026 riguarda le deroghe (5 + 20 giornate).",
+            "source": "https://www.comune.milano.it/argomenti/mobilita/area-b-calendario-dei-divieti"
+          },
+          "note": "Sintesi del calendario ufficiale: le condizioni FAP/campo V.5 sono riportate per esteso sulla pagina sorgente."
+        },
+        "length": {
+          "text": "Vietati i veicoli o complessi di veicoli con lunghezza superiore a 12 metri; il divieto non si applica ai veicoli per trasporto persone. Deroghe annuali o giornaliere per categorie specifiche.",
+          "source": "https://areab.atm.it/it-IT/Web/FAQ"
+        },
+        "dangerous_goods": {
+          "text": "Vietati i veicoli che trasportano merci pericolose (h24, 7/7).",
+          "sources": [
+            "https://www.comune.milano.it/argomenti/mobilita/area-b",
+            "https://www.comune.milano.it/documents/20118/808719/Area+B_volantino+25_5.pdf/aa35b5f0-e692-32b5-e3e7-265bf758e61b?version=1.2&t=1790773122597&download=true"
+          ]
+        },
+        "blind_spot": {
+          "text": "Vietati M2, M3, N2, N3 senza sistemi di rilevamento dell'angolo cieco: N3/M3 dal 1/10/2023, N2/M2 dal 1/10/2024 (fascia 7:30-19:30 feriali). Mezzi di Forze di Polizia, Vigili del Fuoco, Protezione Civile ecc. con adesivo: deroga prorogata al 1/10/2027 (Ordinanza 2338 del 28/09/2026).",
+          "sources": [
+            "https://areab.atm.it/it-IT/Web/FAQ",
+            "https://www.comune.milano.it/documents/d/guest/prot__28-09-2026_0543731_i-file-primario-ordinanza_area_b_ffo__dgc_1182_del_17-09-2026_signed_signed_timbrato?download=true"
+          ]
+        }
+      },
+      "exceptions": [
+        {
+          "text": "Veicoli ibridi ed elettrici possono accedere e circolare liberamente.",
+          "source": "https://areab.atm.it/it-IT/Web/FAQ"
+        },
+        {
+          "text": "Primo anno di divieto: 50 giornate di accesso in deroga per tutti i veicoli, senza registrazione.",
+          "source": "https://www.comune.milano.it/argomenti/mobilita/area-b-calendario-dei-divieti"
+        },
+        {
+          "text": "Dal 1/10/2026 (dal secondo anno di divieto): 5 giornate/anno automatiche per ogni veicolo senza registrazione; altre 20 giornate/anno per residenti e imprese con sede operativa a Milano, con registrazione della targa e 'Rilevazione automatica giornate deroga'. Periodo 1 ottobre - 30 settembre. Le 20 giornate sono per codice fiscale/P.IVA, non per targa, e vengono usate per prime.",
+          "dated_change": "2026-10-01",
+          "sources": [
+            "https://www.comune.milano.it/argomenti/mobilita/area-b",
+            "https://www.comune.milano.it/servizi/mobilita/area-b-richiesta-deroghe-e-permessi",
+            "https://areab.atm.it/it-IT/Web/FAQ",
+            "https://www.comune.milano.it/documents/20118/808719/Area+B_volantino+25_5.pdf/aa35b5f0-e692-32b5-e3e7-265bf758e61b?version=1.2&t=1790773122597&download=true"
+          ]
+        },
+        {
+          "text": "MoVe-In (Regione Lombardia): alternativa alle deroghe, soglia chilometrica annua con monitoraggio a bordo; per i veicoli benzina Euro 2 aderenti la soglia e confermata in 600 km (Ordinanza 373/2026).",
+          "sources": [
+            "https://www.comune.milano.it/argomenti/mobilita/area-b",
+            "https://www.comune.milano.it/documents/d/guest/ordinanza-n-373-del-17022026-pdf?download=true",
+            "https://areab.atm.it/it-IT/Web/FAQ"
+          ]
+        },
+        {
+          "text": "Accesso senza registrazione: velocipedi, autoambulanze, veicoli con targa speciale (Forze Armate, Polizia, CRI, VVF, Protezione Civile ecc.), contrassegno disabili rilasciato dal Comune di Milano con titolare a bordo.",
+          "source": "https://www.comune.milano.it/argomenti/mobilita/area-b-calendario-dei-divieti"
+        },
+        {
+          "text": "Con registrazione: contrassegno disabili rilasciato fuori Milano, veicoli per trasporto disabili, enti e Onlus di soccorso.",
+          "source": "https://www.comune.milano.it/argomenti/mobilita/area-b-calendario-dei-divieti"
+        },
+        {
+          "text": "Deroga Euro 5 diesel trasporto persone con abbonamento ai parcheggi di interscambio Lampugnano, Forlanini, Rogoredo.",
+          "source": "https://www.comune.milano.it/servizi/mobilita/area-b-richiesta-deroghe-e-permessi"
+        },
+        {
+          "text": "Veicoli storici: con CRS e almeno 40 anni derogati (registrazione); tra 20 e 40 anni 25 giornate/anno in deroga.",
+          "source": "https://areab.atm.it/it-IT/Web/FAQ"
+        },
+        {
+          "text": "Persone con gravi patologie o dirette al pronto soccorso: deroga da chiedere entro le 24 del giorno successivo, con certificazione.",
+          "source": "https://www.comune.milano.it/servizi/mobilita/area-b-richiesta-deroghe-e-permessi"
+        },
+        {
+          "text": "Nessuna deroga legata all'eta del conducente.",
+          "source": "https://areab.atm.it/it-IT/Web/FAQ"
+        }
+      ],
+      "access": "Gratuito per i veicoli ammessi; vietato ai veicoli in divieto ambientale (salvo deroghe/MoVe-In), merci > 12 m, merci pericolose, mezzi pesanti senza sistemi angolo cieco.",
+      "fines": {
+        "text": "Nessun importo specifico per Area B sulle pagine del Comune consultate. Norme CdS candidate: art. 7 c.14 (ZTL, 83-332 euro) o art. 7 c.13-bis (limitazioni per classi emissive, 168-678 euro). Quale applichi il Comune non e confermato.",
+        "unverified": true,
+        "sources": [
+          "https://www.normattiva.it/atto/caricaArticolo?art.versione=31&art.idGruppo=1&art.flagTipoArticolo=0&art.codiceRedazionale=092G0306&art.idArticolo=7&art.idSottoArticolo=1&art.idSottoArticolo1=10&art.dataPubblicazioneGazzetta=1992-05-18&art.progressivo=0"
+        ]
+      },
+      "notes": [
+        {
+          "text": "Restano in vigore le regole piu restrittive delle ZTL e corsie preferenziali dentro Area B e le limitazioni regionali.",
+          "source": "https://www.comune.milano.it/documents/20118/808719/Area+B_volantino+25_5.pdf/aa35b5f0-e692-32b5-e3e7-265bf758e61b?version=1.2&t=1790773122597&download=true"
+        },
+        {
+          "text": "Foto delle infrazioni Area B consultabili online (fino a 180 giorni).",
+          "source": "https://www.comune.milano.it/servizi/polizia-locale-e-sicurezza/multe-foto-delle-infrazioni"
+        }
+      ],
+      "sources": [
+        "https://www.comune.milano.it/argomenti/mobilita/area-b",
+        "https://www.comune.milano.it/argomenti/mobilita/area-b-calendario-dei-divieti",
+        "https://www.comune.milano.it/servizi/mobilita/area-b-richiesta-deroghe-e-permessi",
+        "https://areab.atm.it/it-IT/Web/FAQ",
+        "https://www.comune.milano.it/documents/20118/808719/Area+B_volantino+25_5.pdf/aa35b5f0-e692-32b5-e3e7-265bf758e61b?version=1.2&t=1790773122597&download=true",
+        "https://www.comune.milano.it/documents/d/guest/prot__28-09-2026_0543731_i-file-primario-ordinanza_area_b_ffo__dgc_1182_del_17-09-2026_signed_signed_timbrato?download=true",
+        "https://www.comune.milano.it/documents/d/guest/ordinanza-n-373-del-17022026-pdf?download=true"
+      ]
+    },
+    {
+      "id": "ztl-quadrilatero-della-moda",
+      "name": "ZTL Quadrilatero della Moda",
+      "type": "ztl",
+      "opendata_ref": null,
+      "in_dataset_ds51": false,
+      "start": {
+        "in_force": "2025-05-12",
+        "pre_esercizio_until": "2025-09-14",
+        "fines_from": "2025-09-15",
+        "source": "https://www.comune.milano.it/documents/20118/499192/FAQ+ZTL+QUADRILATERO+DELLA+MODA_agg.24092026.pdf/1e9a0052-2f42-2e38-2c16-4a6c43590a72?version=1.1&t=1790261304542&download=true"
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "streets": [
+        "Corso Matteotti",
+        "Corso Monforte",
+        "Corso Venezia",
+        "Largo Mattioli",
+        "Piazza Belgioioso",
+        "Piazza della Scala",
+        "Piazza Meda",
+        "Piazza San Babila",
+        "Sito dei Bagatti Valsecchi",
+        "Via Agnello",
+        "Via Bagutta",
+        "Via Bigli",
+        "Via Borgospesso",
+        "Via Case Rotte",
+        "Via Catena",
+        "Via degli Omenoni",
+        "Via della Spiga (tra via Borgospesso e via Gesu)",
+        "Via Gesu",
+        "Via Hoepli",
+        "Via Monte Napoleone",
+        "Via Morone",
+        "Via Rossari",
+        "Via San Paolo",
+        "Via San Pietro all'Orto",
+        "Via Sant'Andrea",
+        "Via Santo Spirito",
+        "Via Verri"
+      ],
+      "streets_source": "https://www.comune.milano.it/documents/20118/499192/FAQ+ZTL+QUADRILATERO+DELLA+MODA_agg.24092026.pdf/1e9a0052-2f42-2e38-2c16-4a6c43590a72?version=1.1&t=1790261304542&download=true",
+      "access": "Vietati accesso, attraversamento e sosta H24 7/7 salvo deroghe. Controllo con telecamere su accessi e uscite principali.",
+      "exceptions": [
+        {
+          "text": "Senza registrazione: targhe speciali (CD, CC, CRI, Forze Armate, Polizia, VVF, Protezione Civile ecc.) H24.",
+          "source": "https://www.comune.milano.it/servizi/mobilita/ztl-quadrilatero-della-moda"
+        },
+        {
+          "text": "Motocicli, ciclomotori e tre ruote simmetriche (esclusi tricicli con carrozzeria e non basculanti): ammessi H24 fino all'11 maggio 2028; divieto rinviato al 12 maggio 2028.",
+          "dated_change": "2028-05-12",
+          "source": "https://www.comune.milano.it/servizi/mobilita/ztl-quadrilatero-della-moda"
+        },
+        {
+          "text": "Bici e monopattini sempre ammessi.",
+          "source": "https://www.comune.milano.it/documents/20118/499192/FAQ+ZTL+QUADRILATERO+DELLA+MODA_agg.24092026.pdf/1e9a0052-2f42-2e38-2c16-4a6c43590a72?version=1.1&t=1790261304542&download=true"
+        },
+        {
+          "text": "Veicoli categoria N (merci): carico/scarico 9:00-11:00 e 20:00-01:00 tutti i giorni; isotermici anche 16:00-18:00; prodotti freschi/lievitati, lattiero-caseari ed edilizia (ATECO F 41-43) anche 4:30-7:30.",
+          "schedule_allowed": [
+            {
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ],
+              "from": "09:00",
+              "to": "11:00"
+            },
+            {
+              "days": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+              ],
+              "from": "20:00",
+              "to": "01:00"
+            }
+          ],
+          "source": "https://www.comune.milano.it/servizi/mobilita/ztl-quadrilatero-della-moda"
+        },
+        {
+          "text": "Con registrazione targa: residenti e dimoranti (pass sosta 'Ambito 1-1A' + pass transito), accompagnatori (1 veicolo/giorno), box/posti auto, CUDE disabili, artigiani, hotel e autorimesse (targa comunicata da struttura/autorimessa), taxi e NCC fino a 9 posti gia autorizzati corsie/ZTL, altre categorie.",
+          "sources": [
+            "https://www.comune.milano.it/servizi/mobilita/ztl-quadrilatero-della-moda",
+            "https://www.comune.milano.it/documents/20118/499192/FAQ+ZTL+QUADRILATERO+DELLA+MODA_agg.24092026.pdf/1e9a0052-2f42-2e38-2c16-4a6c43590a72?version=1.1&t=1790261304542&download=true"
+          ]
+        },
+        {
+          "text": "Il permesso di sosta libera per auto elettriche/ibride NON consente l'accesso.",
+          "source": "https://www.comune.milano.it/documents/20118/499192/FAQ+ZTL+QUADRILATERO+DELLA+MODA_agg.24092026.pdf/1e9a0052-2f42-2e38-2c16-4a6c43590a72?version=1.1&t=1790261304542&download=true"
+        }
+      ],
+      "permits": "Fascicolo del Cittadino (SPID/CIE) sezione Mobilita, o Comando Decentrato Polizia Locale Zona 1, via Beccaria 19.",
+      "varchi": {
+        "names": null,
+        "unverified": true,
+        "note": "La mappa ufficiale dei varchi (PDF) e un'immagine: unico nome leggibile 'Case Rotte' (varco d'ingresso riservato ai mezzi pubblici). Nessun dataset Open Data dei varchi.",
+        "source": "https://www.comune.milano.it/documents/20118/499192/Varchi.pdf/9bd8515b-8332-18ae-30eb-de7e5169f285?t=1757684070255"
+      },
+      "sources": [
+        "https://www.comune.milano.it/servizi/mobilita/ztl-quadrilatero-della-moda",
+        "https://www.comune.milano.it/documents/20118/499192/FAQ+ZTL+QUADRILATERO+DELLA+MODA_agg.24092026.pdf/1e9a0052-2f42-2e38-2c16-4a6c43590a72?version=1.1&t=1790261304542&download=true",
+        "https://www.comune.milano.it/documents/20118/499192/Varchi.pdf/9bd8515b-8332-18ae-30eb-de7e5169f285?t=1757684070255",
+        "https://www.comune.milano.it/argomenti/mobilita"
+      ]
+    },
+    {
+      "id": "ztl-isola",
+      "name": "ZTL Isola",
+      "type": "ztl",
+      "opendata_ref": null,
+      "in_dataset_ds51": false,
+      "start": {
+        "in_force": "2026-04-20",
+        "pre_esercizio_months": 2,
+        "fines_from": "2026-09-07",
+        "source": "https://www.comune.milano.it/servizi/mobilita/ztl-isola"
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "19:30",
+          "to": "06:00",
+          "overnight": true
+        }
+      ],
+      "streets": [
+        "Piazza Fidia",
+        "Piazzale Archinto",
+        "Piazzale Segrino",
+        "Piazza Minniti",
+        "Piazza Santa Maria alla Fontana",
+        "Piazza Spotorno",
+        "Via Alserio",
+        "Via Angelo della Pergola",
+        "Via Arese",
+        "Via Ugo Bassi",
+        "Via Boltraffio",
+        "Via Borsieri (da via Confalonieri a via Perasto)",
+        "Via Carmagnola",
+        "Via Civerchio",
+        "Via Cola Montano",
+        "Via Cusio",
+        "Via De Castillia",
+        "Via Garigliano",
+        "Via Jacopo dal Verme",
+        "Via Lario",
+        "Via Lepontina",
+        "Via Pastrengo",
+        "Via Pepe",
+        "Via Perasto",
+        "Via Pollaiuolo",
+        "Via Porro Lambertenghi",
+        "Via Rigola",
+        "Via Rosellini",
+        "Via Medardo Rosso",
+        "Via Sassetti (da via Pola a via Confalonieri)",
+        "Via Sebenico",
+        "Via Spalato",
+        "Via Strabone",
+        "Via Thaon di Revel",
+        "Via Toce",
+        "Via Trau",
+        "Via Volturno"
+      ],
+      "streets_source": "https://www.comune.milano.it/documents/20118/6463764/Ordinanza+istituzione+ZTL+Isola.pdf/db358458-ca55-8f3d-ef90-249c42b2014e?version=1.0&t=1776172729446&download=true",
+      "access": "Divieto di accesso e circolazione 19:30-6:00 tutti i giorni, salvo deroghe.",
+      "pedestrian_areas_inside": {
+        "text": "Aree pedonali H24 7/7: via Borsieri (tra via Porro Lambertenghi e piazzale Segrino), via Pepe (tra via Borsieri e via Carmagnola), via Toce, piazza Minniti.",
+        "source": "https://www.comune.milano.it/servizi/mobilita/ztl-isola"
+      },
+      "exceptions": [
+        {
+          "text": "Senza registrazione: velocipedi e monopattini; motocicli, ciclomotori e tre ruote simmetriche (esclusi tricicli con carrozzeria, non basculanti e quadricicli); targhe speciali; isotermici per prodotti lattiero-caseari diretti a esercizi nella ZTL.",
+          "source": "https://www.comune.milano.it/servizi/mobilita/ztl-isola"
+        },
+        {
+          "text": "Con registrazione: residenti/dimoranti (pass sosta Ambito 9 o 10 + pass ZTL Isola), accompagnatori (targa ospite giornaliera; registrazione annuale per residenti >= 75 anni), box/posti auto, CUDE, clienti hotel e autorimesse, medici, artigiani, turnisti, operatori locali, GDO, quotidiani, sharing, taxi/NCC fino a 9 posti, altri.",
+          "source": "https://www.comune.milano.it/servizi/mobilita/ztl-isola"
+        }
+      ],
+      "permits": "Fascicolo del Cittadino (SPID/CIE) sezione Mobilita, o Comando Decentrato Polizia Locale Zona 9, via Passerini 5 (tel. 02 7727 8005).",
+      "varchi": {
+        "names": null,
+        "unverified": true,
+        "note": "Nessun elenco testuale dei varchi; e disponibile solo la mappa JPG.",
+        "source": "https://www.comune.milano.it/documents/20118/6463764/Mappa+ZTL+Isola.jpg/86e7e495-176c-3244-81de-1d0a870fda2e?t=1775833421281"
+      },
+      "sources": [
+        "https://www.comune.milano.it/servizi/mobilita/ztl-isola",
+        "https://www.comune.milano.it/documents/20118/6463764/Ordinanza+istituzione+ZTL+Isola.pdf/db358458-ca55-8f3d-ef90-249c42b2014e?version=1.0&t=1776172729446&download=true",
+        "https://www.comune.milano.it/documents/20118/6463764/Mappa+ZTL+Isola.jpg/86e7e495-176c-3244-81de-1d0a870fda2e?t=1775833421281"
+      ]
+    },
+    {
+      "id": "ztl-ticinese",
+      "name": "ZTL Ticinese",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 194
+      },
+      "schedule": [],
+      "schedule_unverified": true,
+      "access": "transito: autoveicoli muniti di contrassegno, cicli e moto, taxi, veicoli da noleggio con conducente, pubblica utilità, altri autorizzati;  transito e sosta: residenti, trasporto merci (06.00-08.00 e 10.00-12.00 feriali)",
+      "tratto": "Da via Molino delle Armi a piazza XXIV Maggio, via Vetere, via Scaldasole",
+      "ordinanza": "97/2017,52000/2002 (zona a traffico limitato)",
+      "valid_from": "2002-10-09",
+      "notes": [
+        "integrata da ordinanza N64255 del 25/03/2010",
+        "controllo: 2 TELECAMERE"
+      ],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ],
+      "schedule_note": "Orario non indicato nel dataset (probabile H24, non verificato)."
+    },
+    {
+      "id": "ztl-garibaldi-sottoambito-2",
+      "name": "ZTL Garibaldi - Sottoambito 2",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 195
+      },
+      "schedule": [],
+      "schedule_unverified": true,
+      "access": "residenti, velocipedi, motocicli, taxi, carico scarico merci lun-sab 8:00 - 11:00, altri autorizzati",
+      "tratto": "C.so Garibaldi da Via Marsala a L.go La Foppa, L.go La Foppa  civici n. 2, 4 e 5",
+      "ordinanza": "54515/2004,1109/2016 (zona a traffico limitato)",
+      "valid_from": "2004-04-14",
+      "notes": [
+        "c/s 8-11 / 3 TELECAMERE"
+      ],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ],
+      "schedule_note": "Orario non indicato nel dataset (probabile H24, non verificato)."
+    },
+    {
+      "id": "ztl-corso-como",
+      "name": "ZTL Corso Como",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 199
+      },
+      "schedule": [],
+      "schedule_unverified": true,
+      "access": "residenti, velocipedi, carico scarico merci civica amministrazione",
+      "tratto": "Tutta",
+      "ordinanza": "53660/2003 (zona a traffico limitato)",
+      "valid_from": "2003-11-18",
+      "notes": [
+        "c/s 8-11 / PILOMAT"
+      ],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ],
+      "schedule_note": "Orario non indicato nel dataset (probabile H24, non verificato)."
+    },
+    {
+      "id": "ztl-piazzale-governo-provvisorio",
+      "name": "ZTL Piazzale Governo Provvisorio",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 200
+      },
+      "schedule": [],
+      "schedule_unverified": true,
+      "access": "veicoli diretti alle proprieta' private,velocipedi",
+      "tratto": "da via Russo a via Vida",
+      "ordinanza": "49284/2001 (zona a traffico limitato)",
+      "valid_from": "2001-02-12",
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ],
+      "schedule_note": "Orario non indicato nel dataset (probabile H24, non verificato)."
+    },
+    {
+      "id": "ztl-via-della-guastalla",
+      "name": "ZTL Via della Guastalla",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 201
+      },
+      "schedule": [],
+      "schedule_unverified": true,
+      "access": "velocipedi, altri veicoli autorizzati",
+      "tratto": "da via Andreani a via San Barnaba",
+      "ordinanza": "56593/2005 (zona a traffico limitato)",
+      "valid_from": "2005-05-04",
+      "notes": [
+        " PILOMAT"
+      ],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ],
+      "schedule_note": "Orario non indicato nel dataset (probabile H24, non verificato)."
+    },
+    {
+      "id": "ztl-garibaldi-sottoambito-1",
+      "name": "ZTL Garibaldi - Sottoambito 1",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 202
+      },
+      "schedule": [],
+      "schedule_unverified": true,
+      "access": "residenti, velocipedi, motocicli, taxi, carico scarico merci lun-sab 8:00 - 11:00, veicoli a tre ruote simmetriche (cat. L5 Ae) con esclusione dei tricicli con carrozzeria e quelli non basculanti",
+      "tratto": "Corso Garibaldi_via Anfiteatro_via Tessa_via San Simpliciano",
+      "ordinanza": "54515/2004,1109/2016 (zona a traffico limitato)",
+      "valid_from": "2004-04-14",
+      "notes": [
+        "c/s 8-11 / 3 TELECAMERE"
+      ],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ],
+      "schedule_note": "Orario non indicato nel dataset (probabile H24, non verificato)."
+    },
+    {
+      "id": "ztl-cavalcavia-monte-ceneri",
+      "name": "ZTL Cavalcavia Monte Ceneri",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 203
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "22:00",
+          "to": "06:00",
+          "overnight": true
+        }
+      ],
+      "schedule_unverified": false,
+      "access": "veicoli adibiti al pronto soccorso,veicoli di pubblica utilita',autovetture e autocarri di  massa complessiva a pieno carico inferiore a t.3,5",
+      "tratto": "Tutta",
+      "ordinanza": "52317/2002 (zona a traffico limitato)",
+      "valid_from": "2003-03-03",
+      "notes": [
+        "transito vietato dalle 22 alle 6",
+        "transito vietato dalle 22 alle 6"
+      ],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ztl-via-delle-betulle",
+      "name": "ZTL Via delle Betulle",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 204
+      },
+      "schedule": [],
+      "schedule_unverified": true,
+      "access": "veicoli diretti alle proprieta' private,veicoli degli operatori del mercato,velocipedi",
+      "tratto": "tutta escluse le diramazioni verso via degli Ulivi e via degli Ippocastani",
+      "ordinanza": "69791/2013 (istituzione zona a traffico limitato)",
+      "valid_from": null,
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ],
+      "schedule_note": "Orario non indicato nel dataset (probabile H24, non verificato)."
+    },
+    {
+      "id": "ztl-navigli-notturna-via-borsi",
+      "name": "ZTL Navigli notturna - Via Borsi",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 210
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "20:00",
+          "to": "07:00",
+          "overnight": true
+        }
+      ],
+      "schedule_unverified": false,
+      "access": "velocipedi, taxi, NCC fino a nove posti, c/s 5:00-7:30 15:00-17:30, residenti,domiciliati,autorizzati,possessori di box o posto auto",
+      "tratto": "da Via Pichi a Alzaia Naviglio Pavese",
+      "ordinanza": "648/2015",
+      "valid_from": "2015-06-18",
+      "notes": [
+        "attivo tutti i giorni dalle dalle 20:00 alle 07:00"
+      ],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ztl-navigli-fumagalli",
+      "name": "ZTL Navigli (Fumagalli)",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 211
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": false,
+      "access": "velocipedi, residenti e domiciliati, possessori di box o posto auto, taxi e ncc fino a nove posti, residenti in ripa di porta ticinese tra via paoli e il ponte di via valenzs",
+      "tratto": "Tutta",
+      "ordinanza": "648/2015",
+      "valid_from": null,
+      "notes": [
+        "attivo tutti i giorni dalle dalle 00:00 alle 24:00"
+      ],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ztl-navigli-notturna-argelati-fusetti-magolfa",
+      "name": "ZTL Navigli notturna - Argelati Fusetti Magolfa",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 212
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "20:00",
+          "to": "07:00",
+          "overnight": true
+        }
+      ],
+      "schedule_unverified": false,
+      "access": "velocipedi, taxi, NCC fino a nove posti, c/s 5:00-7:30 15:00-17:30, residenti,domiciliati,autorizzati,possessori di box o posto auto",
+      "tratto": "Via Magolfa tra via Segantini e via Fusetti, Via Fusetti tutta, Via Argelati da Via Fusetti a Piazza Arcole",
+      "ordinanza": "648/2015",
+      "valid_from": "2012-05-30",
+      "notes": [
+        "attivo tutti i giorni dalle dalle 20:00 alle 07:00"
+      ],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ztl-navigli-notturna-paoli",
+      "name": "ZTL Navigli notturna (Paoli)",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 213
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "20:00",
+          "to": "07:00",
+          "overnight": true
+        }
+      ],
+      "schedule_unverified": false,
+      "access": "velocipedi, taxi, NCC fino a nove posti, c/s 5:00-7:30 15:00-17:30, residenti,domiciliati,autorizzati,possessori di box o posto auto",
+      "tratto": "Tutta",
+      "ordinanza": "648/2015",
+      "valid_from": "2012-05-30",
+      "notes": [
+        "attivo tutti i giorni dalle dalle 20:00 alle 07:00"
+      ],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ztl-navigli-notturna-pichi-gola",
+      "name": "ZTL Navigli notturna - Pichi Gola",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 214
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "20:00",
+          "to": "07:00",
+          "overnight": true
+        }
+      ],
+      "schedule_unverified": false,
+      "access": "velocipedi, taxi, NCC fino a nove posti, c/s 5:00-7:30 15:00-17:30, residenti,domiciliati,autorizzati,possessori di box o posto auto",
+      "tratto": "Via Pichi da via Borsi a via Gola, Via Gola da via Pichi a via Segantini ,",
+      "ordinanza": "648/2015",
+      "valid_from": "2012-05-30",
+      "notes": [
+        "attivo tutti i giorni dalle dalle 20:00 alle 07:00"
+      ],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ztl-via-dell-unione",
+      "name": "ZTL VIA DELL' UNIONE",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 220
+      },
+      "schedule": [],
+      "schedule_unverified": true,
+      "access": "taxi, cicli-moto, carico scarico mercii (lun-sab dalle 10:00 alle 14:00 e dalle 19:00 alle 7.30)",
+      "tratto": "da via FALCONE  a via TORINO",
+      "ordinanza": "51405/2002 (zona a traffico limitato)",
+      "valid_from": null,
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ],
+      "schedule_note": "Orario non indicato nel dataset (probabile H24, non verificato)."
+    },
+    {
+      "id": "ztl-san-prospero",
+      "name": "ZTL San Prospero",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 221
+      },
+      "schedule": [],
+      "schedule_unverified": true,
+      "access": "taxi, cicli, moto, autorizzati",
+      "tratto": "Via San Prospero da via Broletto a via Meravigli",
+      "ordinanza": "51401/2002 (zona a traffico limitato)",
+      "valid_from": null,
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ],
+      "schedule_note": "Orario non indicato nel dataset (probabile H24, non verificato)."
+    },
+    {
+      "id": "ztl-arco-della-pace",
+      "name": "ZTL Arco della Pace",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 224
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "22:00",
+          "to": "06:00",
+          "overnight": true
+        }
+      ],
+      "schedule_unverified": false,
+      "access": "residenti e domiciliati,autorizzati,possessori di box o posto auto,veicoli adibiti al pronto soccorso,mezzi di emergenza,mezzi di polizia,taxi,ncc,velocipedi",
+      "tratto": null,
+      "ordinanza": "64502/2010 (zona a traffico limitato)",
+      "valid_from": "2010-05-11",
+      "notes": [
+        "attivo tutti i giorni dalle 22:00 alle 6:00"
+      ],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ztl-san-siro-eventi",
+      "name": "ZTL San Siro Eventi",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 1023
+      },
+      "schedule": [],
+      "schedule_unverified": false,
+      "access": "bus, taxi, disabili, veicoli diretti all'interno delle proprietà private, velocipedi, moto, veicoli diretti ai parcheggi a pagamento",
+      "tratto": null,
+      "ordinanza": "670/2017 (misure viabilistiche nelle località adiacenti lo stadio Meazza in occasione di eventi, spettacoli e manifestazioni sportive)",
+      "valid_from": null,
+      "notes": [
+        "attiva nei giorni in cui si svolgono manifestazioni sportive",
+        "attiva solo nei giorni di eventi allo stadio Meazza"
+      ],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ztl-san-dalmazio-paolo-ferrari-filodrammatici",
+      "name": "ZTL SAN DALMAZIO, PAOLO FERRARI, FILODRAMMATICI",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 1067
+      },
+      "schedule": [],
+      "schedule_unverified": true,
+      "access": "Solo transito: taxi, veicoli di pubblica utilita',veicoli autorizzati. Transito e sosta: trasporto merci, dalle 10 alle 14 dei giorni feriali, trasporto valori dalle 8 alle 18 dei giorni feriali",
+      "tratto": "tutta via San Dalmazio, tutta piazza Paolo Ferrari, via Filodrammatici da piazza Paolo Ferrari a piazza della Scala",
+      "ordinanza": "61945/2008 (zona a traffico limitato)",
+      "valid_from": null,
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ],
+      "schedule_note": "Orario non indicato nel dataset (probabile H24, non verificato)."
+    },
+    {
+      "id": "ztl-ascanio-sforza",
+      "name": "ZTL Ascanio Sforza",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 1102
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "from": "19:00",
+          "to": "06:00",
+          "overnight": true
+        },
+        {
+          "days": [
+            5
+          ],
+          "from": "19:00",
+          "to": "24:00"
+        },
+        {
+          "days": [
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        },
+        {
+          "days": [
+            1
+          ],
+          "from": "00:00",
+          "to": "06:00"
+        }
+      ],
+      "schedule_unverified": false,
+      "access": "residenti e domiciliati, velocipedi, veicoli con contrassegno di parcheggio per disabili, mezzi di soccorso, emergenza e polizia, veicoli per supporto a manifestazioni, eventi e servizi essenziali, pulizia e manutenzione strade, taxi ed assimilati",
+      "tratto": "via Ascanio Sforza da via Scoglio di Quarto a via Conchetta, via Scoglio di Quarto, via Bettinelli, via Lagrange, via Pavia (tratto di circa 20 m. da via A. Sforza)",
+      "ordinanza": "1619/2021 (DISCIPLINA VIABILISTICA DELLA ZONA A TRAFFICO LIMITATO (ZTL))",
+      "valid_from": "2021-09-01",
+      "notes": [
+        "attiva dalle ore 19:00 alle ore 6:00 del giorno successivo: il lunedì, il martedì, il mercoledì e il giovedì; dalle ore 19:00 del venerdì alle ore 6:00 del lunedì",
+        "lun-gio 19:00-6:00 del giorno dopo; dal venerdi 19:00 al lunedi 6:00"
+      ],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ztl-sant-agostino-cesare-da-sesto",
+      "name": "ZTL Sant'Agostino - Cesare da Sesto",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 1104
+      },
+      "schedule": [],
+      "schedule_unverified": true,
+      "access": "Transito e sosta : residenti e domiciliati, carico-scarico merci dalle 8:00-11:00 e  16:00-18:00, operatori del mercato, mezzi di soccorso, emergenza, polizia, manutenzione strade. Transito: possessori di box o posto auto, veicoli diretti al parcheggio",
+      "tratto": "Piazza Sant'Agostino (lato che incrocia via Cesare da Sesto) tra viale Papiniano e via Olona - Via Cesare da Sesto tra via Ausonio e piazza Sant'Agostino",
+      "ordinanza": "973/2020; 138/2022 (Delimitazione di Zona a Traffico Limitato (ZTL) in  piazza S. Agostino e nel tratto di via Cesare da Sesto compreso tra piazza S. Agostino e via Ausonio)",
+      "valid_from": "2020-08-17",
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ],
+      "schedule_note": "Orario non indicato nel dataset (probabile H24, non verificato)."
+    },
+    {
+      "id": "ztl-barsanti-autari",
+      "name": "ZTL Barsanti-Autari",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 1107
+      },
+      "schedule": [],
+      "schedule_unverified": true,
+      "access": "residenti e domiciliati, mezzi di soccorsi e assistenza, artigiani e manutentori, disabili, taxi",
+      "tratto": null,
+      "ordinanza": "459/2022 (DISCIPLINA VIABILISTICA DELLA ZONA A TRAFFICO LIMITATO (ZTL))",
+      "valid_from": "2022-04-21",
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ],
+      "schedule_note": "Orario non indicato nel dataset (probabile H24, non verificato)."
+    },
+    {
+      "id": "ztl-san-luigi-scrivia-don-bosco",
+      "name": "ZTL SAN LUIGI, SCRIVIA, DON BOSCO",
+      "type": "ztl",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "ZTL",
+        "id_amat": 1113
+      },
+      "schedule": [],
+      "schedule_unverified": true,
+      "access": "Transito e sosta : residenti e domiciliati, carico e carico merci (dalle ore 5:00 alle ore 23:00), taxi, altri autorizzati. Solo transito:possessori di box non residenti o domiciliati, ospiti delle struutre ricettive che utilizzano i box",
+      "tratto": null,
+      "ordinanza": "697/2021 (DISCIPLINA VIABILISTICA DELLA ZONA A TRAFFICO LIMITATO (ZTL) IN PIAZZA SAN LUIGI, VIA SCRIVIA E VIA DON BOSCO)",
+      "valid_from": "2021-05-04",
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (risorsa aggiornata al 2023-05-02): orari e deroghe come riportati nei campi del dataset, non ricontrollati sull'ordinanza. Verificare prima di usarli come regola vigente.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ],
+      "schedule_note": "Orario non indicato nel dataset (probabile H24, non verificato)."
+    },
+    {
+      "id": "ap-corso-vittorio-emanuele-ii",
+      "name": "Area pedonale Corso Vittorio Emanuele II",
+      "type": "pedonale",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AP",
+        "id_amat": 14
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": true,
+      "access": "carico e scarico merci (dalle 2:00 alle 7:30) da via agnello a via San Paolo, velocipedi",
+      "tratto": "tutto",
+      "ordinanza": "42429/1996 (Istituzione area pedonale urbana)",
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (2023-05-02). Le aree pedonali sono in genere H24: non verificato per singola area.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ap-dante",
+      "name": "Area pedonale Dante",
+      "type": "pedonale",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AP",
+        "id_amat": 16
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": true,
+      "access": "carico e scarico merci (dalle 7:00 alle 10:00), velocipedi",
+      "tratto": "compreso tra Piazza Cairoli e San Prospero",
+      "ordinanza": "41939/1995 (Istituzione area pedonale urbana)",
+      "notes": [
+        "Accesso da Cairoli"
+      ],
+      "source_note": "Dati da Open Data ds51 (2023-05-02). Le aree pedonali sono in genere H24: non verificato per singola area.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ap-area-scala-san-fedele-sottoambito-piazza-della-scala",
+      "name": "Area pedonale Area Scala - San Fedele sottoambito Piazza della Scala",
+      "type": "pedonale",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AP",
+        "id_amat": 41
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": true,
+      "access": null,
+      "tratto": null,
+      "ordinanza": "35309/1990 (Istituzione area pedonale urbana)",
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (2023-05-02). Le aree pedonali sono in genere H24: non verificato per singola area.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ap-navigli-ambito-a-alzaia-naviglio-grande",
+      "name": "Area pedonale Navigli - Ambito A - Alzaia Naviglio Grande",
+      "type": "pedonale",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AP",
+        "id_amat": 88
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": true,
+      "access": "carico e scarico merci  (feriali dalle 5:00 alle 8:00 e dalle 15:00 alle 16:00), velocipedi, residenti e domiciliati, taxi e assimilati, possessori di box",
+      "tratto": "Via Corsico, Via Casale, Alzaia Naviglio Grande tra via Corsico e via Casale",
+      "ordinanza": "67820/2012,1070/2015 (delimitazione area pedonale)",
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (2023-05-02). Le aree pedonali sono in genere H24: non verificato per singola area.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ap-navigli-ambito-b-ripa-di-porta-ticinese",
+      "name": "Area pedonale Navigli - Ambito B - Ripa di Porta Ticinese",
+      "type": "pedonale",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AP",
+        "id_amat": 89
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": true,
+      "access": "carico e scarico merci (dalle 5:00 alle 7:30 e dalle 15:00 alle 17:30), velocipedi,   residenti e domiciliati,",
+      "tratto": "compreso tra via Paoli e viale Gorizia",
+      "ordinanza": "649/2015, 1070/2015 (delimitazione di area pedonale in base ai disposti della deliberazione numero 1173/2015)",
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (2023-05-02). Le aree pedonali sono in genere H24: non verificato per singola area.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ap-corso-di-porta-ticinese-colonne-di-san-lorenzo",
+      "name": "Area pedonale Corso di Porta Ticinese - Colonne di San Lorenzo",
+      "type": "pedonale",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AP",
+        "id_amat": 90
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": true,
+      "access": "veicoli diretti alle proprieta' private,veicoli connessi alle funzioni religiose,velocipedi",
+      "tratto": null,
+      "ordinanza": "48169/2000 (Istituzione area pedonale urbana)",
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (2023-05-02). Le aree pedonali sono in genere H24: non verificato per singola area.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ap-sarpi-sottoambito-a",
+      "name": "Area pedonale Sarpi - sottoambito A",
+      "type": "pedonale",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AP",
+        "id_amat": 112
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": true,
+      "access": "carico e scarico merci (dalle 9:00 alle 12:00 e dalle 16:00 alle 17:00 con uscita esclusivamente in via Lomazzo), velocipedi, taxi, residenti e domiciliati, possessori di box o posto auto",
+      "tratto": "Via P. Sarpi tra Largo Carlo E. Gadda e via Lomazzo - Via A. Albertini",
+      "ordinanza": "65941/2011,71009/2014",
+      "notes": [
+        "integrata da ordinanza n.66004 del 11.04.2011",
+        "controllo: 1 TELECAMERA"
+      ],
+      "source_note": "Dati da Open Data ds51 (2023-05-02). Le aree pedonali sono in genere H24: non verificato per singola area.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ap-area-brera-area-pedonale-c",
+      "name": "Area pedonale Area Brera - Area pedonale C",
+      "type": "pedonale",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AP",
+        "id_amat": 119
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": true,
+      "access": "carico e scarico merci (dalle 9:00 alle 12:00 e dalle 16:00 alle 17:00), velocipedi, taxi, residenti, veicoli espressamente autorizzati",
+      "tratto": "Via Brera tra via del Carmine e via Fiori Oscuri,  via Fiori Oscuri tutta",
+      "ordinanza": "66108/2011,66282/2011",
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (2023-05-02). Le aree pedonali sono in genere H24: non verificato per singola area.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ap-sarpi-sottoambito-b",
+      "name": "Area pedonale Sarpi - sottoambito B",
+      "type": "pedonale",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AP",
+        "id_amat": 122
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": true,
+      "access": "carico e scarico merci (dalle 9:00 alle 12:00 e dalle 16:00 alle 17:00 con uscita esclusivamente in via Lomazzo), velocipedi, taxi, residenti e domiciliati, possessori di box o posto auto",
+      "tratto": "Via Sarpi tra via Paolo Lomazzo e via Rosmini - Via Signorelli",
+      "ordinanza": "65941/2011,71009/2014",
+      "notes": [
+        "integrata da ordinanza n.66004 del 11.04.2011",
+        "controllo: 1 TELECAMERA"
+      ],
+      "source_note": "Dati da Open Data ds51 (2023-05-02). Le aree pedonali sono in genere H24: non verificato per singola area.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ap-sarpi-sottoambito-c",
+      "name": "Area pedonale Sarpi - sottoambito C",
+      "type": "pedonale",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AP",
+        "id_amat": 123
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": true,
+      "access": "carico e scarico merci (dalle 9:00 alle 12:00 e dalle 16:00 alle 17:00), velocipedi, taxi, residenti e domiciliati, possessori di box o posto auto",
+      "tratto": "Via Sarpi tra via Rosmini e piazza Baiamonti, via Messina da Sarpi a Fioravanti, Via Arnolfo di Cambio",
+      "ordinanza": "65941/2011,71009/2014",
+      "notes": [
+        "integrata da ordinanze n.66004 del 11.04.2011 e n. 70793 del",
+        "controllo: 1 TELECAMERA"
+      ],
+      "source_note": "Dati da Open Data ds51 (2023-05-02). Le aree pedonali sono in genere H24: non verificato per singola area.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ap-navigli-ambito-c-alzaia-naviglio-pavese",
+      "name": "Area pedonale Navigli - Ambito C - Alzaia Naviglio Pavese",
+      "type": "pedonale",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AP",
+        "id_amat": 127
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": true,
+      "access": "carico e scarico merci (feriali dalle 5:00 alle 8:00 e dalle 14:00 alle 16:00), velocipedi, taxi, residenti e domiciliati, possessori di box",
+      "tratto": "Alzaia Naviglio Pavese tra via Gorizia e via Darwin, via Magolfa tra Alz. Naviglio Pavese e via Fusetti, via Gola tra alz. Naviglio Pavese e via Pichi",
+      "ordinanza": "67820/2012,1070/2015 (delimitazione area pedonale)",
+      "notes": [
+        "controllo: Pilomat"
+      ],
+      "source_note": "Dati da Open Data ds51 (2023-05-02). Le aree pedonali sono in genere H24: non verificato per singola area.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ap-piazza-xxiv-maggio",
+      "name": "Area pedonale Piazza XXIV Maggio",
+      "type": "pedonale",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AP",
+        "id_amat": 152
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": true,
+      "access": null,
+      "tratto": "tutta",
+      "ordinanza": "149/2018 (istituzione percorso pedonale e ciclabile)",
+      "notes": [
+        "AP di fatto"
+      ],
+      "source_note": "Dati da Open Data ds51 (2023-05-02). Le aree pedonali sono in genere H24: non verificato per singola area.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ap-piazza-del-duomo",
+      "name": "Area pedonale Piazza del Duomo",
+      "type": "pedonale",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AP",
+        "id_amat": 171
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": true,
+      "access": "velocipedi",
+      "tratto": null,
+      "ordinanza": "41965/1996 (Istituzione area pedonale urbana)",
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (2023-05-02). Le aree pedonali sono in genere H24: non verificato per singola area.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ap-area-brera-area-pedonale-b",
+      "name": "Area pedonale Area Brera - Area pedonale B",
+      "type": "pedonale",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AP",
+        "id_amat": 174
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": true,
+      "access": "velocipedi",
+      "tratto": "tutta",
+      "ordinanza": "48281/2000 (Istituzione area pedonale urbana)",
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (2023-05-02). Le aree pedonali sono in genere H24: non verificato per singola area.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ap-area-duomo-sottoambito-marconi",
+      "name": "Area pedonale Area Duomo - Sottoambito Marconi",
+      "type": "pedonale",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AP",
+        "id_amat": 177
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": true,
+      "access": null,
+      "tratto": "tra via Dogana e piazza Del Duomo",
+      "ordinanza": "65416/2010 (Istituzione area pedonale urbana)",
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (2023-05-02). Le aree pedonali sono in genere H24: non verificato per singola area.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ap-mercanti-cordusio",
+      "name": "Area pedonale Mercanti - Cordusio",
+      "type": "pedonale",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AP",
+        "id_amat": 182
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": true,
+      "access": "velocipedi, carico e scarico merci, veicoli diretti alle proprieta' private",
+      "tratto": "Via e Piaza Mercanti, piazza Cordusio lato civici pari, Via del Gallo",
+      "ordinanza": "42111/1996 (Istituzione area pedonale urbana)",
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (2023-05-02). Le aree pedonali sono in genere H24: non verificato per singola area.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ap-area-brera-area-pedonale-a",
+      "name": "Area pedonale Area Brera - Area pedonale A",
+      "type": "pedonale",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AP",
+        "id_amat": 234
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": true,
+      "access": "veicoli diretti alle proprieta' private,velocipedi",
+      "tratto": "Via Breara tra via Fiori Oscuri e via Pontaccio",
+      "ordinanza": "42499/1996 (Istituzione area pedonale urbana)",
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (2023-05-02). Le aree pedonali sono in genere H24: non verificato per singola area.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ap-area-brera-area-pedonale-d",
+      "name": "Area pedonale Area Brera - Area pedonale D",
+      "type": "pedonale",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AP",
+        "id_amat": 1048
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": true,
+      "access": "carico e scarico merci (lun-sab dalle 10:00 alle 14:00), veicoli diretti alle proprieta' private,velocipedi, altri autorizzati",
+      "tratto": "tutta",
+      "ordinanza": "66207/2011 (Istituzione area pedonale urbana)",
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (2023-05-02). Le aree pedonali sono in genere H24: non verificato per singola area.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ap-alzaia-naviglio-pavese",
+      "name": "Area pedonale Alzaia Naviglio Pavese",
+      "type": "pedonale",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AP",
+        "id_amat": 1106
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": true,
+      "access": "mezzi di emergenza, invalidi, velocipedi, veicoli a emissione zero assimilabili ai velocipedi, veicoli diretti alle proprietà private (per 160 m da via Don Rodrigo)",
+      "tratto": "da via Don Rodrigo al carraio del civico 256 escluso e dal carraio del civico 288 a via Gattinara",
+      "ordinanza": "959/2022 (Disciplina viabilistica dell'Area Pedonale in Alzaia Naviglio Pavese)",
+      "notes": [
+        "controllo: fissi e mobili"
+      ],
+      "source_note": "Dati da Open Data ds51 (2023-05-02). Le aree pedonali sono in genere H24: non verificato per singola area.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    },
+    {
+      "id": "ap-ripa-di-porta-ticinese-tra-via-paoli-e-via-valenza-e-controviale-sud",
+      "name": "Area pedonale Ripa di Porta Ticinese tra via Paoli e via Valenza e controviale sud",
+      "type": "pedonale",
+      "opendata_ref": {
+        "dataset": "ds51",
+        "tipo": "AP",
+        "id_amat": 1111
+      },
+      "schedule": [
+        {
+          "days": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "from": "00:00",
+          "to": "24:00"
+        }
+      ],
+      "schedule_unverified": true,
+      "access": "residenti e domiciliati, possessori di box o posto auto, taxi, invaliidi, velocipedi",
+      "tratto": "Ripa di Porta Ticinese tra via Paoli e via Valenza e controviale sud",
+      "ordinanza": "791/2022",
+      "notes": [],
+      "source_note": "Dati da Open Data ds51 (2023-05-02). Le aree pedonali sono in genere H24: non verificato per singola area.",
+      "unverified_current": true,
+      "sources": [
+        "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+        "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson"
+      ]
+    }
+  ],
+  "fines": {
+    "ztl_access": {
+      "law": "D.Lgs. 285/1992 (Codice della Strada) art. 7 comma 14, secondo periodo",
+      "text": "La violazione del divieto di circolazione nelle corsie riservate, nelle aree pedonali e nelle ZTL e punita con sanzione da 83 a 332 euro (testo in vigore dal 25-4-2026).",
+      "min_eur": 83,
+      "max_eur": 332,
+      "source": "https://www.normattiva.it/atto/caricaArticolo?art.versione=31&art.idGruppo=1&art.flagTipoArticolo=0&art.codiceRedazionale=092G0306&art.idArticolo=7&art.idSottoArticolo=1&art.idSottoArticolo1=10&art.dataPubblicazioneGazzetta=1992-05-18&art.progressivo=0",
+      "source_urn": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:1992-04-30;285~art7"
+    },
+    "emission_class_limits": {
+      "law": "art. 7 comma 13-bis CdS",
+      "text": "Circolare in violazione delle limitazioni per classi emissive (art. 7 c.1 lett. b): 168-678 euro; se reiterata nel biennio, sospensione della patente da 15 a 30 giorni.",
+      "min_eur": 168,
+      "max_eur": 678,
+      "applies_to_area_b_c": null,
+      "unverified": true,
+      "note": "Non confermato su pagine del Comune se per Area B/C (che sono ZTL) si applica il c.13-bis o il c.14.",
+      "source": "https://www.normattiva.it/atto/caricaArticolo?art.versione=31&art.idGruppo=1&art.flagTipoArticolo=0&art.codiceRedazionale=092G0306&art.idArticolo=7&art.idSottoArticolo=1&art.idSottoArticolo1=10&art.dataPubblicazioneGazzetta=1992-05-18&art.progressivo=0"
+    },
+    "reduced_payment": {
+      "law": "art. 202 c.1 CdS",
+      "text": "Si paga il minimo entro 60 giorni dalla contestazione/notifica; ridotto del 30% se pagato entro 5 giorni (esclusi i casi con confisca o sospensione della patente). Se il giorno di scadenza e festivo, slitta al primo giorno non festivo.",
+      "ztl_example_eur": {
+        "within_5_days": 58.1,
+        "within_60_days": 83.0,
+        "plus": "spese di notifica (importo non verificato)"
+      },
+      "sources": [
+        "https://www.normattiva.it/atto/caricaArticolo?art.versione=6&art.idGruppo=12&art.flagTipoArticolo=0&art.codiceRedazionale=092G0306&art.idArticolo=202&art.idSottoArticolo=1&art.idSottoArticolo1=10&art.dataPubblicazioneGazzetta=1992-05-18&art.progressivo=0",
+        "https://www.comune.milano.it/servizi/polizia-locale-e-sicurezza/pagamento-di-un-verbale-d-infrazione-al-codice-della-strada"
+      ]
+    },
+    "points": {
+      "value": 0,
+      "unverified": true,
+      "note": "Indizio ufficiale: il pagamento senza spese via Fascicolo vale per gli accessi a ZTL/Area B/Area C ed esclude le sanzioni con decurtazione punti, quindi l'accesso in ZTL non toglie punti. La tabella dell'art. 126-bis non e stata letta.",
+      "source": "https://www.comune.milano.it/servizi/polizia-locale-e-sicurezza/pagamento-multe-tramite-fascicolo-del-cittadino"
+    },
+    "notices": {
+      "text": "Il verbale di accertamento arriva per raccomandata (notifiche affidate a Sailpost S.p.A.); se non eri in casa lo ritiri alla casa comunale del Municipio indicato. Registrando la targa sull'app/web Fascicolo del Cittadino ricevi l'avviso via app ed email e, pagando entro 5 giorni dall'avviso, eviti le spese di notifica (vale per sosta, corsie preferenziali, ZTL comprese Area B e Area C, velocita entro 10 km/h; solo targhe italiane). In questo caso non c'e lo slittamento se il 5 giorno e festivo.",
+      "sources": [
+        "https://www.comune.milano.it/servizi/polizia-locale-e-sicurezza/pagamento-di-un-verbale-d-infrazione-al-codice-della-strada",
+        "https://www.comune.milano.it/servizi/polizia-locale-e-sicurezza/pagamento-multe-tramite-fascicolo-del-cittadino"
+      ]
+    },
+    "payment_channels": {
+      "text": "pagoPA (codice avviso o CBILL) con home banking, uffici postali, Lottomatica, Sisal, tabaccai, bancomat, supermercati; online; sportello via Friuli 30 su appuntamento; rateizzazione possibile.",
+      "source": "https://www.comune.milano.it/servizi/polizia-locale-e-sicurezza/pagamento-di-un-verbale-d-infrazione-al-codice-della-strada"
+    },
+    "verify": [
+      {
+        "text": "Foto delle infrazioni online (fino a 180 giorni) per Area B, semafori rossi e velocita.",
+        "source": "https://www.comune.milano.it/servizi/polizia-locale-e-sicurezza/multe-foto-delle-infrazioni"
+      },
+      {
+        "text": "Area C: transiti visibili in MyAreaC; se non risulta un transito chiedere verifica a MTA.UfficioAreaC@comune.milano.it entro i termini di pagamento.",
+        "source": "https://areac.atm-mi.it/Areac/IWeb/FAQ2.aspx"
+      },
+      {
+        "text": "Copia del verbale o della cartolina di notifica: modulo a pl.sanzioniservizio@comune.milano.it (non interrompe i termini e non vale come ricorso).",
+        "source": "https://www.comune.milano.it/servizi/polizia-locale-e-sicurezza/pagamento-di-un-verbale-d-infrazione-al-codice-della-strada"
+      }
+    ],
+    "contest": {
+      "prefetto": {
+        "deadline_days": 60,
+        "how": "PEC pl.sanzioniservizio@pec.comune.milano.it, oppure raccomandata A/R al Prefetto tramite Polizia Locale - Area Procedure Sanzionatorie, via Friuli 30, oppure Prefetto, corso Monforte 31",
+        "if_rejected": "Ordinanza ingiunzione di almeno il doppio della sanzione, da pagare entro 30 giorni; ricorribile al Giudice di Pace entro 30 giorni."
+      },
+      "giudice_di_pace": {
+        "deadline_days": 30,
+        "how": "raccomandata A/R a Ufficio del Giudice di Pace, via F. Sforza 23, Milano"
+      },
+      "condition": "Il ricorso e possibile solo se non hai gia pagato.",
+      "source": "https://www.comune.milano.it/servizi/polizia-locale-e-sicurezza/ricorso-contro-verbali-per-infrazioni-del-codice-della-strada"
+    },
+    "tolerance": {
+      "value": null,
+      "unverified": true,
+      "note": "Nelle fonti ufficiali consultate non c'e una tolleranza (minuti di margine) per gli ingressi in ZTL. Per Area C il rimedio e il ticket entro le 24:00 del giorno dopo o il differito da 22,50 euro entro 7 giorni.",
+      "source": "https://areac.atm-mi.it/Areac/IWeb/FAQ2.aspx"
+    },
+    "area_c_late_payment_avoids_fine": {
+      "text": "Area C: pagando entro le 24 del giorno dopo (7,50 euro) o entro 7 giorni (22,50 euro, MyAreaC) l'ingresso e regolare.",
+      "source": "https://areac.atm-mi.it/Areac/IWeb/FAQ2.aspx"
+    }
+  },
+  "holidays": {
+    "area_b_c": {
+      "text": "Area B e Area C non attive sabato, domenica e festivi.",
+      "sources": [
+        "https://www.comune.milano.it/argomenti/mobilita/area-c",
+        "https://www.comune.milano.it/argomenti/mobilita/area-b",
+        "https://areab.atm.it/it-IT/Web/FAQ",
+        "https://areac.atm-mi.it/Areac/IWeb/English.aspx"
+      ]
+    },
+    "august": {
+      "text": "Area C attiva tutto l'anno (nessuna sospensione ad agosto indicata).",
+      "source": "https://www.comune.milano.it/argomenti/mobilita/area-c"
+    },
+    "list": {
+      "value": [
+        "01-01",
+        "01-06",
+        "Pasquetta (variabile)",
+        "04-25",
+        "05-01",
+        "06-02",
+        "08-15",
+        "11-01",
+        "12-07 Sant'Ambrogio (patrono)",
+        "12-08",
+        "12-25",
+        "12-26"
+      ],
+      "unverified": true,
+      "note": "Le pagine ufficiali dicono solo 'festivi esclusi' e non danno un elenco. Elenco nazionale e patrono non verificati su fonte ufficiale in questa ricerca (in particolare il 7 dicembre)."
+    },
+    "other_ztl": "Le ZTL Quadrilatero (H24) e Isola (19:30-6:00) valgono tutti i giorni, festivi compresi."
+  },
+  "datasets": [
+    {
+      "name": "Aree pedonali e ZTL (comprese Area C e Area B) - poligoni",
+      "dataset_page": "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl",
+      "license": "CC-BY",
+      "url": "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/d788b26b-31b4-4e57-992d-276a1280c8c2/download/disciplina_aree.geojson",
+      "format": "GeoJSON",
+      "content_type": "application/geo+json",
+      "size_bytes": 818972,
+      "http": 200,
+      "crs": "CRS84 (WGS84 lon/lat)",
+      "features": 217,
+      "feature_counts_by_tipo": {
+        "AP": 110,
+        "DT": 76,
+        "ZTL": 23,
+        "AREA_C": 1,
+        "AREA_B": 1,
+        "DA": 6
+      },
+      "fields": [
+        "id_amat",
+        "tipo (AP, ZTL, AREA_C, AREA_B, DT, DA)",
+        "nome",
+        "ordinanza",
+        "deroghe",
+        "val_inizio",
+        "val_fine",
+        "delibera",
+        "tratto",
+        "note",
+        "cartello",
+        "dissuasori"
+      ],
+      "caveat": "Risorsa aggiornata al 2023-05-02: mancano la ZTL Quadrilatero della Moda (2025) e la ZTL Isola (2026). Nei dati il tipo DT e divieto di transito e DA e corsia riservata (la documentazione cita invece 'CR').",
+      "alt": [
+        {
+          "format": "SHP (zip)",
+          "url": "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/f78eeb29-231f-4c14-9fab-6eacc742db9a/download/disciplina_aree_shp.zip",
+          "content_type": "application/zip",
+          "size_bytes": 211820,
+          "http": 200
+        },
+        {
+          "format": "CSV",
+          "url": "https://dati.comune.milano.it/dataset/d7d9179a-8228-427f-9c86-1e30154be4fe/resource/3a9418ff-ceb1-436a-aa05-acb5f05166e2/download/disciplina_aree.csv",
+          "content_type": "text/csv",
+          "size_bytes": 65131,
+          "http": 200
+        }
+      ]
+    },
+    {
+      "name": "Varchi Area C (inclusi varchi TPL) - punti",
+      "dataset_page": "https://dati.comune.milano.it/dataset/ds82_infogeo_varchi_elettronici_localizzazione_",
+      "license": "CC-BY",
+      "url": "https://dati.comune.milano.it/dataset/4cad1605-8225-4ecd-9b82-868b3af453e5/resource/fa8fcc31-1722-4a50-a0ae-ce7b9c0d0361/download/ingressi_areac_varchi.geojson",
+      "format": "GeoJSON",
+      "content_type": "application/geo+json",
+      "size_bytes": 7251,
+      "http": 200,
+      "crs": "CRS84",
+      "features": 42,
+      "fields": [
+        "id_amat",
+        "label"
+      ],
+      "resource_last_modified": "2026-10-14",
+      "alt": [
+        {
+          "format": "SHP (zip)",
+          "url": "https://dati.comune.milano.it/dataset/4cad1605-8225-4ecd-9b82-868b3af453e5/resource/87908ed9-9640-43c3-9678-cecf6cf1773f/download/ingressi_areac_varchi_shp.zip",
+          "content_type": "application/zip",
+          "size_bytes": 2023,
+          "http": 200
+        },
+        {
+          "format": "CSV (sep ;)",
+          "url": "https://dati.comune.milano.it/dataset/4cad1605-8225-4ecd-9b82-868b3af453e5/resource/d0283c73-135a-4077-b66b-1e2d5479aecd/download/ingressi_areac_varchi.csv",
+          "content_type": "text/csv",
+          "size_bytes": 3731,
+          "http": 200
+        }
+      ]
+    },
+    {
+      "name": "Varchi Area B - punti con stato",
+      "dataset_page": "https://dati.comune.milano.it/dataset/ds959-varchi-areab",
+      "license": "CC-BY",
+      "url": "https://dati.comune.milano.it/dataset/cebfe28e-a50e-4b81-9d14-7b0d37170f0d/resource/c3439df3-673d-45e7-b151-c6d8d70ba0e4/download/areab_varchi.geojson",
+      "format": "GeoJSON",
+      "content_type": "application/geo+json",
+      "size_bytes": 48497,
+      "http": 200,
+      "crs": "CRS84",
+      "features": 188,
+      "fields": [
+        "id_amat",
+        "nome",
+        "autorizzaz",
+        "stato (ATTIVI E SANZIONANTI / IN PRE-ESERCIZIO / DA PROGRAMMARE PRE-ESERCIZIO)"
+      ],
+      "resource_last_modified": "2023-11-07",
+      "alt": [
+        {
+          "format": "SHP (zip)",
+          "url": "https://dati.comune.milano.it/dataset/cebfe28e-a50e-4b81-9d14-7b0d37170f0d/resource/14a33ee9-ac82-456e-9019-ffa582d05ff4/download/areab_varchi_shp.zip",
+          "content_type": "application/zip",
+          "size_bytes": 7117,
+          "http": 200
+        },
+        {
+          "format": "CSV",
+          "url": "https://dati.comune.milano.it/dataset/cebfe28e-a50e-4b81-9d14-7b0d37170f0d/resource/377b3a32-562b-4d66-9c51-4f1c3e6d87b6/download/areab_varchi.csv",
+          "content_type": "text/csv",
+          "size_bytes": 27815,
+          "http": 200
+        }
+      ]
+    },
+    {
+      "name": "Varchi delle altre ZTL (Quadrilatero, Isola, ZTL storiche)",
+      "url": null,
+      "unverified": true,
+      "note": "Nessun dataset di punti trovato su dati.comune.milano.it (ricerche: varchi, telecamere, ztl, quadrilatero). Ci sono solo mappe immagine.",
+      "map_images": [
+        "https://www.comune.milano.it/documents/20118/499192/Varchi.pdf/9bd8515b-8332-18ae-30eb-de7e5169f285?t=1757684070255",
+        "https://www.comune.milano.it/documents/20118/6463764/Mappa+ZTL+Isola.jpg/86e7e495-176c-3244-81de-1d0a870fda2e?t=1775833421281"
+      ]
+    },
+    {
+      "name": "Mappa interattiva Area C (geoportale del Comune, ArcGIS)",
+      "url": "https://geoportale.comune.milano.it/portal/apps/webappviewer/index.html?id=bab7a4fea79f4e8bb0ab01e203168995",
+      "format": "web app",
+      "unverified": true,
+      "note": "Linkata dalla pagina Area C. L'API REST del portale non era raggiungibile da qui (curl e fetch del browser falliti): non testata come fonte di dati.",
+      "source": "https://www.comune.milano.it/argomenti/mobilita/area-c"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Comune di Milano - Area C",
+      "url": "https://www.comune.milano.it/argomenti/mobilita/area-c"
+    },
+    {
+      "title": "Area C - Calendario dei divieti",
+      "url": "https://www.comune.milano.it/argomenti/mobilita/area-c-calendario-dei-divieti"
+    },
+    {
+      "title": "Area C - Acquista il ticket",
+      "url": "https://www.comune.milano.it/servizi/mobilita/area-c-acquista-il-ticket"
+    },
+    {
+      "title": "Area C - Attiva il ticket",
+      "url": "https://www.comune.milano.it/servizi/mobilita/area-c-attiva-il-ticket"
+    },
+    {
+      "title": "Area C - Costo dei ticket dal 30 ottobre 2023 (PDF)",
+      "url": "https://www.comune.milano.it/documents/20118/35188/Area+C+nuove+tariffe+dal+2023+Area+C.pdf/5ee21a73-7301-60c7-d2fe-5e2f77e8a158?version=1.0&t=1746021538283&download=true"
+    },
+    {
+      "title": "Area C - Agevolazioni residenti",
+      "url": "https://www.comune.milano.it/servizi/mobilita/area-c-agevolazioni-per-residenti-ed-equiparati"
+    },
+    {
+      "title": "Area C - Agevolazioni imprese (veicoli di servizio)",
+      "url": "https://www.comune.milano.it/servizi/mobilita/area-c-agevolazioni-per-imprese-con-veicoli-di-servizio"
+    },
+    {
+      "title": "Area C - Deroga trasporto merci 8-10",
+      "url": "https://www.comune.milano.it/servizi/mobilita/area-c-deroga-per-trasporto-merci-8-00-10-00"
+    },
+    {
+      "title": "Area C - Deroghe veicoli oltre 7,5 m",
+      "url": "https://www.comune.milano.it/servizi/mobilita/area-c-deroghe-per-veicoli-superiori-a-7-5-metri"
+    },
+    {
+      "title": "Portale Area C (ATM per il Comune) - FAQ",
+      "url": "https://areac.atm-mi.it/Areac/IWeb/FAQ2.aspx"
+    },
+    {
+      "title": "Portale Area C - Regole, agevolazioni, esenzioni",
+      "url": "https://areac.atm-mi.it/Areac/IWeb/FAQ.aspx"
+    },
+    {
+      "title": "Portale Area C - Information (EN)",
+      "url": "https://areac.atm-mi.it/Areac/IWeb/English.aspx"
+    },
+    {
+      "title": "Portale Area C - FAQ (EN)",
+      "url": "https://areac.atm-mi.it/Areac/IWeb/FAQ_en.aspx"
+    },
+    {
+      "title": "Ordinanza n. 373 del 17/02/2026 (rinvio divieti moto)",
+      "url": "https://www.comune.milano.it/documents/d/guest/ordinanza-n-373-del-17022026-pdf?download=true"
+    },
+    {
+      "title": "Comune di Milano - Area B",
+      "url": "https://www.comune.milano.it/argomenti/mobilita/area-b"
+    },
+    {
+      "title": "Area B - Calendario dei divieti",
+      "url": "https://www.comune.milano.it/argomenti/mobilita/area-b-calendario-dei-divieti"
+    },
+    {
+      "title": "Area B - Richiesta deroghe e permessi",
+      "url": "https://www.comune.milano.it/servizi/mobilita/area-b-richiesta-deroghe-e-permessi"
+    },
+    {
+      "title": "Portale Area B (ATM per il Comune) - FAQ",
+      "url": "https://areab.atm.it/it-IT/Web/FAQ"
+    },
+    {
+      "title": "Area B - volantino informativo (PDF)",
+      "url": "https://www.comune.milano.it/documents/20118/808719/Area+B_volantino+25_5.pdf/aa35b5f0-e692-32b5-e3e7-265bf758e61b?version=1.2&t=1790773122597&download=true"
+    },
+    {
+      "title": "Ordinanza n. 2338 del 28/09/2026 (Area B, angolo cieco mezzi istituzionali)",
+      "url": "https://www.comune.milano.it/documents/d/guest/prot__28-09-2026_0543731_i-file-primario-ordinanza_area_b_ffo__dgc_1182_del_17-09-2026_signed_signed_timbrato?download=true"
+    },
+    {
+      "title": "Pass disabili per Area B, Area C, ZTL",
+      "url": "https://www.comune.milano.it/servizi/mobilita/ingressi-in-area-b-e-area-c-corsie-riservate-ztl-per-titolari-di-contrassegno-disabili"
+    },
+    {
+      "title": "ZTL Quadrilatero della Moda",
+      "url": "https://www.comune.milano.it/servizi/mobilita/ztl-quadrilatero-della-moda"
+    },
+    {
+      "title": "FAQ ZTL Quadrilatero della Moda (agg. 24/09/2026, PDF)",
+      "url": "https://www.comune.milano.it/documents/20118/499192/FAQ+ZTL+QUADRILATERO+DELLA+MODA_agg.24092026.pdf/1e9a0052-2f42-2e38-2c16-4a6c43590a72?version=1.1&t=1790261304542&download=true"
+    },
+    {
+      "title": "Mappa varchi ZTL Quadrilatero (PDF)",
+      "url": "https://www.comune.milano.it/documents/20118/499192/Varchi.pdf/9bd8515b-8332-18ae-30eb-de7e5169f285?t=1757684070255"
+    },
+    {
+      "title": "ZTL Isola",
+      "url": "https://www.comune.milano.it/servizi/mobilita/ztl-isola"
+    },
+    {
+      "title": "Ordinanza istituzione ZTL Isola (PDF)",
+      "url": "https://www.comune.milano.it/documents/20118/6463764/Ordinanza+istituzione+ZTL+Isola.pdf/db358458-ca55-8f3d-ef90-249c42b2014e?version=1.0&t=1776172729446&download=true"
+    },
+    {
+      "title": "Mobilita - Comune di Milano",
+      "url": "https://www.comune.milano.it/argomenti/mobilita"
+    },
+    {
+      "title": "Pagamento di un verbale CdS",
+      "url": "https://www.comune.milano.it/servizi/polizia-locale-e-sicurezza/pagamento-di-un-verbale-d-infrazione-al-codice-della-strada"
+    },
+    {
+      "title": "Pagamento multe tramite Fascicolo del Cittadino",
+      "url": "https://www.comune.milano.it/servizi/polizia-locale-e-sicurezza/pagamento-multe-tramite-fascicolo-del-cittadino"
+    },
+    {
+      "title": "Ricorso contro verbali CdS",
+      "url": "https://www.comune.milano.it/servizi/polizia-locale-e-sicurezza/ricorso-contro-verbali-per-infrazioni-del-codice-della-strada"
+    },
+    {
+      "title": "Multe: foto delle infrazioni",
+      "url": "https://www.comune.milano.it/servizi/polizia-locale-e-sicurezza/multe-foto-delle-infrazioni"
+    },
+    {
+      "title": "Normattiva - CdS art. 7 (testo vigente dal 25-4-2026)",
+      "url": "https://www.normattiva.it/atto/caricaArticolo?art.versione=31&art.idGruppo=1&art.flagTipoArticolo=0&art.codiceRedazionale=092G0306&art.idArticolo=7&art.idSottoArticolo=1&art.idSottoArticolo1=10&art.dataPubblicazioneGazzetta=1992-05-18&art.progressivo=0"
+    },
+    {
+      "title": "Normattiva - CdS art. 202",
+      "url": "https://www.normattiva.it/atto/caricaArticolo?art.versione=6&art.idGruppo=12&art.flagTipoArticolo=0&art.codiceRedazionale=092G0306&art.idArticolo=202&art.idSottoArticolo=1&art.idSottoArticolo1=10&art.dataPubblicazioneGazzetta=1992-05-18&art.progressivo=0"
+    },
+    {
+      "title": "Open Data ds51 Aree pedonali e ZTL",
+      "url": "https://dati.comune.milano.it/dataset/ds51_trafficotrasporti_aree_pedonali_ztl"
+    },
+    {
+      "title": "Open Data ds82 Varchi Area C",
+      "url": "https://dati.comune.milano.it/dataset/ds82_infogeo_varchi_elettronici_localizzazione_"
+    },
+    {
+      "title": "Open Data ds959 Varchi Area B",
+      "url": "https://dati.comune.milano.it/dataset/ds959-varchi-areab"
+    }
+  ]
+}

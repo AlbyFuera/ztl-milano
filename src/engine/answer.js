@@ -17,17 +17,32 @@ const VERDICT_LABEL = {
 };
 
 // 'banned' | 'allowed' | 'unknown' rispetto ai divieti in vigore in quella data.
+// Un divieto ha `maxEuro` (vietato se euro <= maxEuro) oppure `euro6` ('abc' | 'd') per le sottoclassi Euro 6.
+function banApplies(ban, vehicle) {
+  if (ban.euro6) {
+    if (vehicle.euro == null) return 'unknown';
+    if (vehicle.euro !== 6) return 'no';
+    if (!vehicle.euro6) return 'unknown';
+    return vehicle.euro6 === ban.euro6 ? 'yes' : 'no';
+  }
+  if (ban.maxEuro == null) return 'yes';
+  if (vehicle.euro == null) return 'unknown';
+  return vehicle.euro <= ban.maxEuro ? 'yes' : 'no';
+}
+
 export function vehicleCheck(zone, vehicle, when) {
   const bans = (zone.vehicleBans ?? []).filter((b) => !b.since || b.since <= isoDayOf(when));
   if (!bans.length) return { result: 'allowed', ban: null };
   if (!vehicle?.fuel) return { result: 'unknown', ban: null };
+  if (zone.uncertainFuels?.includes(vehicle.fuel)) return { result: 'unknown', ban: null };
+  let unknown = null;
   for (const ban of bans) {
     if (!ban.fuel.includes(vehicle.fuel)) continue;
-    if (ban.maxEuro == null) return { result: 'banned', ban };
-    if (vehicle.euro == null) return { result: 'unknown', ban };
-    if (vehicle.euro <= ban.maxEuro) return { result: 'banned', ban };
+    const a = banApplies(ban, vehicle);
+    if (a === 'yes') return { result: 'banned', ban };
+    if (a === 'unknown') unknown ??= ban;
   }
-  return { result: 'allowed', ban: null };
+  return unknown ? { result: 'unknown', ban: unknown } : { result: 'allowed', ban: null };
 }
 
 export function describeBans(zone, when) {
@@ -36,13 +51,14 @@ export function describeBans(zone, when) {
 }
 
 function zoneNames(zones) {
-  return zones.map((z) => z.name).join(', ');
+  const main = zones.filter((z) => z.featured);
+  return (main.length ? main : zones.slice(0, 4)).map((z) => z.name).join(', ');
 }
 
 function clarify(zones, text) {
   return {
     ok: false, zoneId: null, verdict: 'chiarire',
-    text: `${text} Puoi chiedere di: ${zoneNames(zones)}. Esempio: "Posso entrare in Area C domani alle 8?"`,
+    text: `${text} Prova con una zona come ${zoneNames(zones)}. Esempio: "Posso entrare in Area C domani alle 8?"`,
     sources: [],
   };
 }
@@ -70,10 +86,14 @@ const FREE_ENTRY = {
   pedonale: 'Senza permesso entri',
 };
 
-function accessLines(zone, status, when, now, v) {
+function accessLines(zone, status, when, now, v, vehicle) {
   const lines = [];
   const at = capitalize(formatWhenRel(when, now));
-  if (status.active && zone.alwaysActive) {
+  if (status.active && zone.type === 'pedonale') {
+    lines.push(zone.alwaysActive
+      ? `${zone.name} è chiusa alle auto 24 ore su 24, tutti i giorni.`
+      : `${at} ${zone.name} è chiusa alle auto (dalle ${formatTime(status.currentWindow.start)} alle ${formatTime(status.currentWindow.end)}).`);
+  } else if (status.active && zone.alwaysActive) {
     lines.push(`${zone.name} è attiva 24 ore su 24, tutti i giorni.`);
   } else if (status.active) {
     const { start, end } = status.currentWindow;
@@ -90,8 +110,9 @@ function accessLines(zone, status, when, now, v) {
   }
 
   if (status.active) {
-    if (v.verdict === 'pagamento' && zone.payment) lines.push(zone.payment);
+    if (v.verdict === 'pagamento' && (zone.paymentShort ?? zone.payment)) lines.push(zone.paymentShort ?? zone.payment);
     if (v.free) lines.push(zone.freeNote ?? 'Il tuo veicolo entra senza pagare.');
+    if (vehicle?.fuel && zone.fuelNotes?.[vehicle.fuel]) lines.push(zone.fuelNotes[vehicle.fuel]);
     if (v.verdict === 'dipende') {
       lines.push(`Sono vietati: ${describeBans(zone, when)}. Dimmi alimentazione e classe Euro (es. "diesel Euro 5") per una risposta precisa.`);
     }
@@ -128,15 +149,27 @@ export function answerQuestion(question, now, ctx) {
   }
 
   const status = zoneStatus(zone, q.when);
+  const caveat = zone.verified === false
+    ? ' Attenzione: orario preso dagli Open Data del Comune, non da una pagina aggiornata. Controlla il cartello all\'ingresso.'
+    : '';
+
+  if (status.active === null) {
+    return {
+      ...base, verdict: 'info', status,
+      detail: `Per ${zone.name} gli orari non sono disponibili nelle fonti ufficiali consultate. Controlla il cartello all'ingresso o la pagina del Comune.`,
+      text: `Per ${zone.name} gli orari non sono disponibili nelle fonti ufficiali consultate. Controlla il cartello all'ingresso o la pagina del Comune.`,
+    };
+  }
 
   if (q.intent === 'hours') {
     const now_ = status.active ? 'Adesso è attiva.' : 'Adesso non è attiva.';
     const next = status.nextChange ? ` ${status.active ? 'Si disattiva' : 'Si attiva'} ${formatWhenRel(status.nextChange, now)}.` : '';
     const nowLine = q.whenExplicit ? '' : ` ${now_}${next}`;
-    return { ...base, verdict: 'info', text: `${zone.name}: ${describeSchedule(zone)}.${nowLine}`, status };
+    const t = `${zone.name}: ${describeSchedule(zone)}.${nowLine}${caveat}`;
+    return { ...base, verdict: 'info', text: t, detail: t, status };
   }
 
   const v = accessVerdict(zone, status, vehicle, q.when);
-  const lines = [VERDICT_LABEL[v.verdict], ...accessLines(zone, status, q.when, now, v)];
-  return { ...base, verdict: v.verdict, text: lines.join(' '), status, vehicle: vehicle ?? null };
+  const detail = accessLines(zone, status, q.when, now, v, vehicle).join(' ') + caveat;
+  return { ...base, verdict: v.verdict, text: `${VERDICT_LABEL[v.verdict]} ${detail}`, detail, status, vehicle: vehicle ?? null };
 }

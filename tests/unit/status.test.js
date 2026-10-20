@@ -93,3 +93,23 @@ describe('zoneStatus: fascia corrente', () => {
     expect(zoneStatus(feriale, romeDate(2026, 10, 20, 21, 0)).currentWindow).toBeNull();
   });
 });
+
+describe('zone con orario non confermato', () => {
+  const ignota = { id: 'ignota', name: 'ZTL Ignota', type: 'ztl', schedule: [], scheduleUnknown: true };
+  it('lo stato è sconosciuto (active null) e non c\'è prossimo cambio', () => {
+    const s = zoneStatus(ignota, romeDate(2026, 10, 20, 12, 0));
+    expect(s.active).toBeNull();
+    expect(s.nextChange).toBeNull();
+    expect(s.reason).toMatch(/non disponibili/);
+  });
+  it('isActiveAt restituisce null', () => {
+    expect(isActiveAt(ignota, romeDate(2026, 10, 20, 12, 0))).toBeNull();
+  });
+});
+
+describe('motivo quando la zona è spenta tutto il giorno', () => {
+  it('nomina il giorno della settimana invece di "oggi"', () => {
+    const s = zoneStatus(feriale, romeDate(2026, 10, 25, 12, 0)); // domenica
+    expect(s.reason).toBe('la domenica non è attiva');
+  });
+});

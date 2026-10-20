@@ -1,6 +1,7 @@
 import './styles.css';
 import { registerSW } from 'virtual:pwa-register';
 import { formatTime } from './engine/format.js';
+import { provisional } from './data/rules.js';
 import * as now from './views/now.js';
 import * as map from './views/map.js';
 import * as ask from './views/ask.js';
@@ -36,6 +37,7 @@ function route() {
   main.className = '';
   main.innerHTML = '';
   cleanup = r.view.render(main, params, id) ?? null;
+  if (provisional) main.insertAdjacentHTML('afterbegin', '<p class="notice red provisional">Anteprima del design con dati di prova: non usare queste informazioni.</p>');
   const tab = r.tab === undefined ? name : r.tab;
   document.querySelectorAll('.tabbar a').forEach((a) => {
     if (a.dataset.tab === tab) a.setAttribute('aria-current', 'page');

@@ -17,6 +17,7 @@ export function sourcesHtml(sources = []) {
 
 // Etichetta del disco in base a tipo zona e stato.
 export function signInfo(zone, status) {
+  if (status.active === null) return { cls: 'unk', big: 'Orari n.d.', small: 'vedi cartello' };
   if (!status.active) return { cls: 'free', big: 'Libera', small: 'si entra' };
   if (zone.type === 'congestion') return { cls: 'paid', big: 'Attiva', small: 'a pagamento' };
   if (zone.type === 'lez') return { cls: 'lez', big: 'Attiva', small: 'divieti veicoli' };
@@ -25,6 +26,9 @@ export function signInfo(zone, status) {
 
 export function signHtml(zone, status, size = '') {
   const s = signInfo(zone, status);
+  if (size === 'hero') {
+    return `<span class="sign sign-hero ${s.cls}" aria-hidden="true"><b>${esc(zone.short ?? '')}</b></span>`;
+  }
   if (size === 'sm') {
     return `<span class="sign sign-sm ${s.cls}" aria-hidden="true"><b>${esc(zone.short ?? '')}</b></span>`;
   }
@@ -32,12 +36,38 @@ export function signHtml(zone, status, size = '') {
 }
 
 export function pillHtml(zone, status) {
+  if (status.active === null) return '<span class="pill unk">Orari n.d.</span>';
   if (!status.active) return '<span class="pill off">Libera</span>';
   if (zone.type === 'congestion') return '<span class="pill paid">A pagamento</span>';
+  if (zone.type === 'lez') return '<span class="pill lez">Attiva</span>';
   return '<span class="pill on">Attiva</span>';
 }
 
+// Tono di colore dello stato: go (lime), pay (giallo), lez (pervinca), stop (corallo).
+export function toneOf(zone, status) {
+  if (status.active === null) return 'unk';
+  if (!status.active) return 'go';
+  if (zone.type === 'congestion') return 'pay';
+  if (zone.type === 'lez') return 'lez';
+  return 'stop';
+}
+
+// Conto alla rovescia ai secondi: "02:14:33", oltre le 24 ore "3 giorni e 4 h".
+export function clock(to, now) {
+  const s = Math.max(0, Math.floor((to.getTime() - now.getTime()) / 1000));
+  if (s >= 86400) {
+    const d = Math.floor(s / 86400);
+    const h = Math.floor((s % 86400) / 3600);
+    return `${d} ${d === 1 ? 'giorno' : 'giorni'}${h ? ` e ${h} h` : ''}`;
+  }
+  const hh = String(Math.floor(s / 3600)).padStart(2, '0');
+  const mm = String(Math.floor((s % 3600) / 60)).padStart(2, '0');
+  const ss = String(s % 60).padStart(2, '0');
+  return `${hh}:${mm}:${ss}`;
+}
+
 export function stateLine(zone, status, now) {
+  if (status.active === null) return 'Orari non disponibili nelle fonti ufficiali';
   if (zone.alwaysActive) return 'Attiva 24 ore su 24';
   if (status.active && status.nextChange) return `Attiva fino alle ${formatTime(status.nextChange)}`;
   if (status.nextChange) return `Si attiva ${formatWhenRel(status.nextChange, now)}`;
