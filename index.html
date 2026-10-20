@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>ZTL Milano</title>
+    <meta name="description" content="Area C, Area B e ZTL di Milano: mappa, orari, stato in tempo reale, multe e un assistente che ti dice quando puoi entrare. Dati dalle fonti ufficiali del Comune di Milano." />
+    <meta name="theme-color" content="#1F4E9C" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <a class="skip" href="#view">Vai al contenuto</a>
+    <header class="topbar">
+      <a class="brand" href="#/adesso" aria-label="ZTL Milano, vai alla home">
+        <svg class="brand-disc" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" fill="#fff" stroke="#C8102E" stroke-width="6"/><text x="20" y="25" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="13" fill="#1C232B">ZTL</text></svg>
+        <span>ZTL Milano</span>
+      </a>
+      <time class="clock" id="clock" aria-live="off"></time>
+      <a class="topbar-link" href="#/fonti">Fonti</a>
+    </header>
+
+    <main id="view" tabindex="-1"></main>
+
+    <nav class="tabbar" aria-label="Sezioni">
+      <a href="#/adesso" data-tab="adesso"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></svg><span>Adesso</span></a>
+      <a href="#/mappa" data-tab="mappa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg><span>Mappa</span></a>
+      <a href="#/chiedi" data-tab="chiedi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5Z"/><path d="M9 10h6"/></svg><span>Chiedi</span></a>
+      <a href="#/veicolo" data-tab="veicolo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16v-4l2-5h12l2 5v4H4Z"/><circle cx="7.5" cy="16.5" r="1.8"/><circle cx="16.5" cy="16.5" r="1.8"/></svg><span>Veicolo</span></a>
+      <a href="#/multe" data-tab="multe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l3 3v15H6V3Z"/><path d="M9 10h6M9 14h6M9 18h3"/></svg><span>Multe</span></a>
+    </nav>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

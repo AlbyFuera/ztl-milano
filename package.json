@@ -20,6 +20,7 @@
     "vitest": "^2.1.9"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.136.0",
     "leaflet": "^1.9.4"
   },
   "private": true

@@ -98,3 +98,18 @@ Riconosce: nomi e alias delle zone (in `rules.js`, campo `aliases`), "adesso/ora
 - [ ] Playwright su viewport Pixel 7: navigazione tab, mappa con poligoni, domanda all'assistente, installabilità (manifest valido, SW registrato), modalità offline.
 - [ ] Revisione multi-agente (bug, accessibilità/mobile, correttezza dei dati vs fonti) e correzione.
 - [ ] Repo GitHub `AlbyFuera/ztl-milano`, deploy Vercel produzione, test e2e ripetuti sull'URL pubblico.
+
+## Aggiornamento UX (richiesta di Alberto, 2026-10-20)
+
+Ogni sezione risponde a un bisogno diverso (jobs-to-be-done):
+
+| Bisogno | Sezione (tab) | Funzione distintiva |
+|---|---|---|
+| "Posso entrare adesso?" | Adesso (home) | Stato live di tutte le zone + countdown; geolocalizzazione: in che zona sei / quale è vicina |
+| "Domani alle 8 devo andare in centro" | Mappa | Perimetri ufficiali + slider del tempo (giorno/ora) che accende/spegne le zone |
+| Domanda precisa | Chiedi | Assistente: verdetto + orari + prossimo cambio + fonte |
+| "La mia auto può entrare?" | Veicolo | Profilo veicolo salvato sul dispositivo; esito per zona oggi e divieti futuri con data |
+| "Mi è arrivata una multa" | Multe | Calcolatore: importo ridotto/ordinario, scadenze di pagamento e ricorso dalla data di notifica |
+
+Scheda zona `#/zona/:id`: orari, come pagare, deroghe, uscita, fonti. Fonti raggiungibili dall'header.
+Il profilo veicolo è usato anche da Adesso, Mappa e Chiedi (una sola fonte di verità in `src/state.js`).
