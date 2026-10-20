@@ -14,10 +14,11 @@ test.afterEach(async ({ page }) => {
 
 test('home: stato live di tutte le zone', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1, name: 'Posso entrare adesso?' })).toBeVisible();
-  await expect(page.locator('.hero .sign')).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'Posso entrare?' })).toBeVisible();
+  await expect(page.locator('.status-card .verdict-word')).toBeVisible();
   const rows = page.locator('.zone-list .zone-row');
   expect(await rows.count()).toBeGreaterThanOrEqual(4);
+  expect(await page.locator('details.group').count()).toBe(2);
   await expect(page.locator('.zone-list')).toContainText('Area C');
   await expect(page.locator('.zone-list')).toContainText('Area B');
 });
@@ -174,4 +175,41 @@ test('layout: nessuno scroll orizzontale su schermi piccoli @layout', async ({ p
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, hash).toBeLessThanOrEqual(0);
   }
+});
+
+test('verdetto a frase: scegliere "Domani alle 8" ricalcola la card', async ({ page }) => {
+  await page.goto('/#/adesso');
+  await page.getByRole('button', { name: /Cambia quando/ }).click();
+  await page.getByRole('dialog').getByRole('button', { name: 'Domani alle 8' }).click();
+  await expect(page.getByRole('button', { name: /Cambia quando/ })).toContainText('08:00');
+  const word = await page.locator('.verdict-word').textContent();
+  expect(['Puoi entrare', 'Puoi entrare pagando']).toContain(word.trim());
+  await page.getByRole('button', { name: /Cambia quando/ }).click();
+  await page.getByRole('dialog').getByRole('button', { name: 'Adesso' }).click();
+  await expect(page.getByRole('button', { name: /Cambia quando/ })).toContainText('adesso');
+});
+
+test('mappa: cerco una via, vedo il verdetto e la salvo nei miei posti', async ({ page }) => {
+  await page.route('https://nominatim.openstreetmap.org/**', (route) =>
+    route.fulfill({ json: [{ lat: '45.4641', lon: '9.1919', name: 'Piazza del Duomo', display_name: 'Piazza del Duomo, Municipio 1, Milano, Lombardia' }] }),
+  );
+  await page.goto('/#/mappa?cerca=1');
+  await page.getByLabel('Cerca una via o un posto a Milano').fill('piazza duomo');
+  await page.locator('#map-results button').first().click();
+  await expect(page.locator('#sheet.open h2')).toHaveText('Piazza del Duomo');
+  await expect(page.locator('#sheet .verdict-list')).toContainText('Area C');
+  await page.getByRole('button', { name: 'Salva nei miei posti' }).click();
+  await page.goto('/#/adesso');
+  await expect(page.locator('.zone-row', { hasText: 'Piazza del Duomo' })).toBeVisible();
+});
+
+test('veicolo: nome e permesso compaiono nella frase della home', async ({ page }) => {
+  await page.goto('/#/veicolo');
+  await page.getByLabel(/Come la chiami/).fill('Golf');
+  await page.locator('.seg label', { hasText: 'Benzina' }).click();
+  await page.getByLabel(/Classe Euro/).selectOption('6');
+  await page.locator('.seg label', { hasText: 'Contrassegno disabili' }).click();
+  await page.getByRole('button', { name: 'Salva veicolo' }).click();
+  await page.goto('/#/adesso');
+  await expect(page.getByRole('link', { name: /Cambia veicolo/ })).toContainText('Golf');
 });

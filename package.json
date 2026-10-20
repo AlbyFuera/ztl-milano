@@ -14,7 +14,7 @@
   "license": "ISC",
   "type": "module",
   "devDependencies": {
-    "@playwright/test": "1.48",
+    "@playwright/test": "^1.56.1",
     "vite": "^5.4.21",
     "vite-plugin-pwa": "^0.20.5",
     "vitest": "^2.1.9"

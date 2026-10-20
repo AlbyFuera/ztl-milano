@@ -19,10 +19,13 @@ function resultFor(zone, v) {
   const now = new Date();
   const { result, ban } = vehicleCheck(zone, v, now);
   if (result === 'banned') return { cls: 'on', label: 'Non puoi entrare', detail: `Quando la zona è attiva. Divieto: ${ban.label}.` };
-  if (result === 'unknown') return { cls: 'paid', label: 'Indica la classe Euro', detail: 'Serve la classe Euro per verificare i divieti.' };
+  if (result === 'unknown') {
+    if (zone.uncertainFuels?.includes(v.fuel)) return { cls: 'unk', label: 'Da verificare', detail: 'Per GPL e metano controlla il calendario dei divieti del Comune.' };
+    return { cls: 'paid', label: 'Indica la classe Euro', detail: ban ? `Serve la sigla esatta per il divieto "${ban.label}".` : 'Serve la classe Euro per verificare i divieti.' };
+  }
   if (zone.type === 'congestion') {
     const free = zone.freeFor?.includes(v.fuel);
-    return { cls: free ? 'off' : 'paid', label: free ? 'Puoi entrare, gratis' : 'Puoi entrare, a pagamento', detail: free ? zone.freeNote ?? '' : 'Quando la zona è attiva serve il ticket.' };
+    return { cls: free ? 'off' : 'paid', label: free ? 'Puoi entrare, gratis' : 'Puoi entrare, a pagamento', detail: free ? zone.freeNote ?? '' : zone.fuelNotes?.[v.fuel] ?? 'Quando la zona è attiva serve il ticket.' };
   }
   return { cls: 'off', label: 'Puoi entrare', detail: 'Il tuo veicolo non rientra nei divieti in vigore oggi.' };
 }
@@ -32,8 +35,10 @@ function futureBans(v) {
   const items = [];
   for (const z of zones) {
     for (const b of z.vehicleBans ?? []) {
-      if (!b.since || b.since <= today) continue;
-      const hits = v && b.fuel.includes(v.fuel) && (b.maxEuro == null || (v.euro != null && v.euro <= b.maxEuro));
+      if (!b.since || b.since <= today) continue; // già in vigore: è nel riquadro sopra
+      const hits = v && b.fuel.includes(v.fuel) && (b.euro6
+        ? v.euro === 6 && (!v.euro6 || v.euro6 === b.euro6)
+        : b.maxEuro == null || (v.euro != null && v.euro <= b.maxEuro));
       items.push({ date: b.since, zone: z.name, label: b.label, hits });
     }
   }
@@ -51,6 +56,10 @@ export function render(el) {
         <p class="muted">Dimmi che auto hai: ti dico dove puoi entrare oggi e quali divieti arrivano. Resta salvato solo su questo telefono.</p>
       </div>
       <form class="card" id="vform">
+        <div class="field">
+          <label for="vname">Come la chiami? (facoltativo)</label>
+          <input id="vname" name="name" maxlength="24" placeholder="Es. Golf, la Panda" value="${esc(v?.name ?? '')}" autocomplete="off" />
+        </div>
         <fieldset class="field">
           <legend>Alimentazione</legend>
           <div class="seg">${FUELS.map(([k, l]) => `<label><input type="radio" name="fuel" value="${k}" ${v?.fuel === k ? 'checked' : ''}><span>${l}</span></label>`).join('')}</div>
@@ -62,6 +71,22 @@ export function render(el) {
             ${[0, 1, 2, 3, 4, 5, 6].map((n) => `<option value="${n}" ${v?.euro === n ? 'selected' : ''}>Euro ${n}</option>`).join('')}
           </select>
         </div>
+        <fieldset class="field" id="euro6-field" ${v?.fuel === 'diesel' && v?.euro === 6 ? '' : 'hidden'}>
+          <legend>Diesel Euro 6: quale sigla c'è sul libretto?</legend>
+          <div class="seg">
+            <label><input type="radio" name="euro6" value="abc" ${v?.euro6 === 'abc' ? 'checked' : ''}><span>Euro 6 A, B o C</span></label>
+            <label><input type="radio" name="euro6" value="d" ${v?.euro6 === 'd' ? 'checked' : ''}><span>Euro 6 D-TEMP o D</span></label>
+            <label><input type="radio" name="euro6" value="" ${v?.euro === 6 && !v?.euro6 ? 'checked' : ''}><span>Non lo so</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="field">
+          <legend>Hai un permesso? (facoltativo)</legend>
+          <div class="seg">
+            <label><input type="checkbox" name="permits" value="residente" ${v?.permits?.includes('residente') ? 'checked' : ''}><span>Sono residente in una ZTL</span></label>
+            <label><input type="checkbox" name="permits" value="cude" ${v?.permits?.includes('cude') ? 'checked' : ''}><span>Contrassegno disabili (CUDE)</span></label>
+          </div>
+          <p class="small muted">Con un permesso le risposte diventano "dipende": di solito serve la targa registrata per quella zona.</p>
+        </fieldset>
         <div class="btn-row">
           <button class="btn" type="submit">Salva veicolo</button>
           ${v ? '<button class="btn ghost" type="button" id="vclear">Cancella</button>' : ''}
@@ -101,11 +126,21 @@ export function render(el) {
       const fuel = fd.get('fuel');
       if (!fuel) { el.querySelector('#vsaved').textContent = 'Scegli l\'alimentazione.'; return; }
       const euroRaw = fd.get('euro');
-      setVehicle({ fuel, euro: euroRaw === '' ? null : Number(euroRaw) });
+      const euro = euroRaw === '' ? null : Number(euroRaw);
+      const euro6 = fuel === 'diesel' && euro === 6 && fd.get('euro6') ? fd.get('euro6') : null;
+      const name = String(fd.get('name') ?? '').trim().slice(0, 24) || null;
+      const permits = fd.getAll('permits').filter((x) => x === 'residente' || x === 'cude');
+      setVehicle({ name, fuel, euro, euro6, permits });
       draw();
       el.querySelector('#vsaved').textContent = 'Veicolo salvato. Lo uso anche nell\'assistente.';
     });
     el.querySelector('#vclear')?.addEventListener('click', () => { setVehicle(null); draw(); });
+    const form = el.querySelector('#vform');
+    const sync = () => {
+      const fd = new FormData(form);
+      el.querySelector('#euro6-field').hidden = !(fd.get('fuel') === 'diesel' && fd.get('euro') === '6');
+    };
+    form.addEventListener('change', sync);
   };
   draw();
 }

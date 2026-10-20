@@ -34,7 +34,7 @@ export default defineConfig({
         navigateFallbackDenylist: [/^\/api\//],
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/[abcd]\.basemaps\.cartocdn\.com\//,
+            urlPattern: /^https:\/\/tile\.openstreetmap\.org\//,
             handler: 'CacheFirst',
             options: { cacheName: 'tiles', expiration: { maxEntries: 600, maxAgeSeconds: 60 * 60 * 24 * 30 } },
           },

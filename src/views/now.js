@@ -1,75 +1,110 @@
 import { zones } from '../data/rules.js';
-import { esc, signHtml, pillHtml, stateLine, statusOf, toneOf, clock } from '../ui.js';
+import { esc, signHtml, stateLine, clock } from '../ui.js';
 import { locate, mostSpecific } from '../geo-data.js';
-import { getVehicle } from '../state.js';
-import { vehicleCheck } from '../engine/answer.js';
+import { getVehicle, getWhen, resolveWhen, getPlaces, onChange } from '../state.js';
+import { personalVerdict, VERDICT_TEXT, VERDICT_TONE } from '../verdict.js';
+import { openWhenPicker, whenLabel } from '../when-picker.js';
 
 let heroId = null;
 let locationNote = '';
 let popped = false;
 
-const SUB = {
-  go: 'Puoi entrare e uscire liberamente.',
-  pay: 'Entri solo pagando il ticket giornaliero.',
-  lez: 'Vietata ai veicoli più inquinanti.',
-  stop: 'Entrano solo i veicoli autorizzati.',
-};
-
 const ICON = {
   pin: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg>',
   chat: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4V5Z"/><path d="M9 10.5h6"/></svg>',
-  car: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16v-4l2-5h12l2 5v4H4Z"/><circle cx="7.5" cy="16.5" r="1.8"/><circle cx="16.5" cy="16.5" r="1.8"/></svg>',
   map: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg>',
+  search: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg>',
 };
 
-function vehicleLine(zone, now) {
-  const v = getVehicle();
-  if (!v || !zone.vehicleBans?.length) return '';
-  const { result } = vehicleCheck(zone, v, now);
-  if (result === 'banned') return '<p class="status-sub">Il tuo veicolo qui non può entrare quando è attiva.</p>';
-  if (result === 'allowed') return '<p class="small" style="font-weight:600">Il tuo veicolo non rientra nei divieti.</p>';
-  return '';
-}
+export const vehicleLabel = (v) => (v ? (v.name?.trim() || 'la tua auto') : 'un\'auto qualsiasi');
 
-function heroHtml(zone, now) {
-  const st = statusOf(zone, now);
-  const tone = toneOf(zone, st);
-  const word = st.active ? 'Attiva' : 'Libera';
-  const cd = st.nextChange
-    ? `<p class="countdown">${st.active ? 'Si spegne tra' : 'Si accende tra'} <span data-clock="${st.nextChange.getTime()}">${esc(clock(st.nextChange, now))}</span></p>`
+function heroHtml(zone) {
+  const when = resolveWhen();
+  const v = getVehicle();
+  const pv = personalVerdict(zone, when, v);
+  const st = pv.status;
+  const tone = VERDICT_TONE[pv.key];
+  const live = !getWhen();
+  const cd = live && st.nextChange
+    ? `<p class="countdown">${st.active ? 'Si spegne tra' : 'Si accende tra'} <span data-clock="${st.nextChange.getTime()}">${esc(clock(st.nextChange, when))}</span></p>`
     : '';
   const anim = popped ? '' : ' pop-in';
   popped = true;
   return `
-    <section class="status-card ${tone}" aria-live="polite" aria-label="Stato di ${esc(zone.name)}">
+    <section class="status-card ${tone}" aria-live="polite" aria-label="Verdetto per ${esc(zone.name)}">
       <div class="sticker${anim}">${signHtml(zone, st, 'hero')}</div>
       <p class="zone-name">${esc(zone.name)}</p>
-      <p class="status-word">${word}</p>
-      <p class="status-sub">${esc(st.active ? SUB[tone] : SUB.go)}</p>
-      <p class="small" style="font-weight:600">${esc(stateLine(zone, st, now))}</p>
+      <p class="status-word verdict-word">${esc(VERDICT_TEXT[pv.key])}</p>
+      <div class="sentence">
+        <button type="button" class="pick" id="pick-when" aria-label="Cambia quando, ora: ${esc(whenLabel())}">${esc(whenLabel())} <span aria-hidden="true">▾</span></button>
+        <span>con</span>
+        <a class="pick" href="#/veicolo" aria-label="Cambia veicolo, ora: ${esc(vehicleLabel(v))}">${esc(vehicleLabel(v))} <span aria-hidden="true">▾</span></a>
+      </div>
+      <p class="status-sub">${esc(pv.reason)}</p>
+      <p class="small" style="font-weight:600">${esc(stateLine(zone, st, when))}</p>
       ${cd}
-      ${vehicleLine(zone, now)}
       <a class="more" href="#/zona/${esc(zone.id)}">Orari, costi e regole ↗</a>
     </section>`;
 }
 
-function chipsHtml(current, now) {
-  return `<div class="chips" role="group" aria-label="Scegli la zona">${zones
-    .map((z) => {
-      const st = statusOf(z, now);
-      return `<button type="button" class="chip" data-pick="${esc(z.id)}" aria-pressed="${z.id === current.id}"><span class="dot ${toneOf(z, st)}" aria-hidden="true"></span>${esc(z.name)}</button>`;
-    })
+function chipsHtml(current) {
+  const when = resolveWhen();
+  const v = getVehicle();
+  const featured = zones.filter((z) => z.featured || z.id === current.id);
+  return `<div class="chips" role="group" aria-label="Scegli la zona">${featured
+    .map((z) => `<button type="button" class="chip" data-pick="${esc(z.id)}" aria-pressed="${z.id === current.id}"><span class="dot ${VERDICT_TONE[personalVerdict(z, when, v).key]}" aria-hidden="true"></span>${esc(z.name)}</button>`)
     .join('')}</div>`;
 }
 
-function listHtml(now) {
-  return `<ul class="zone-list">${zones
+function rowsHtml(list) {
+  const when = resolveWhen();
+  const v = getVehicle();
+  return `<ul class="zone-list">${list
     .map((z) => {
-      const st = statusOf(z, now);
+      const pv = personalVerdict(z, when, v);
       return `<li><a class="zone-row" href="#/zona/${esc(z.id)}" data-zone="${esc(z.id)}">
-        ${signHtml(z, st, 'sm')}
-        <span class="meta"><span class="name">${esc(z.name)}</span><br><span class="state">${esc(stateLine(z, st, now))}</span></span>
-        ${pillHtml(z, st)}
+        ${signHtml(z, pv.status, 'sm')}
+        <span class="meta"><span class="name">${esc(z.name)}</span><br><span class="state">${esc(stateLine(z, pv.status, when))}</span></span>
+        <span class="pill ${VERDICT_TONE[pv.key]}">${esc(VERDICT_TEXT[pv.key])}</span>
+      </a></li>`;
+    })
+    .join('')}</ul>`;
+}
+
+const openGroups = new Set();
+function listHtml() {
+  const featured = zones.filter((z) => z.featured);
+  const groups = [
+    ['ztl', 'Altre ZTL', zones.filter((z) => !z.featured && z.type === 'ztl')],
+    ['pedonale', 'Aree pedonali', zones.filter((z) => !z.featured && z.type === 'pedonale')],
+  ].filter(([, , l]) => l.length);
+  return `${rowsHtml(featured)}
+    ${groups
+      .map(([key, title, list]) => `<details class="group" data-group="${key}" ${openGroups.has(key) ? 'open' : ''}>
+        <summary><span>${esc(title)}</span><span class="count">${list.length}</span></summary>
+        ${rowsHtml(list)}
+      </details>`)
+      .join('')}
+    <p class="small muted">"Orari non disponibili" vuol dire che le fonti ufficiali non riportano l'orario: segui il cartello all'ingresso.</p>`;
+}
+
+function placesHtml() {
+  const places = getPlaces();
+  if (!places.length) {
+    return `<a class="zone-row" href="#/mappa?cerca=1"><span class="ico-inline">${ICON.search}</span><span class="meta"><span class="name">Salva i tuoi posti</span><br><span class="state">Cerca casa, ufficio o il ristorante e vedi subito se puoi arrivarci in auto.</span></span></a>`;
+  }
+  const when = resolveWhen();
+  const v = getVehicle();
+  return `<ul class="zone-list">${places
+    .map((p) => {
+      const inside = zones.filter((z) => p.zones?.includes(z.id));
+      const top = mostSpecific(inside);
+      const pv = top ? personalVerdict(top, when, v) : { key: 'si' };
+      const where = inside.length ? inside.map((z) => z.name).join(', ') : 'Fuori dalle zone';
+      return `<li><a class="zone-row" href="#/mappa?lat=${p.lat}&lng=${p.lng}&nome=${encodeURIComponent(p.label)}">
+        <span class="ico-inline">${ICON.pin}</span>
+        <span class="meta"><span class="name">${esc(p.label)}</span><br><span class="state">${esc(where)}</span></span>
+        <span class="pill ${VERDICT_TONE[pv.key]}">${esc(VERDICT_TEXT[pv.key])}</span>
       </a></li>`;
     })
     .join('')}</ul>`;
@@ -77,31 +112,38 @@ function listHtml(now) {
 
 export function render(el) {
   const draw = () => {
-    const now = new Date();
     const zone = zones.find((z) => z.id === heroId) ?? zones[0];
     const focusId = document.activeElement?.dataset?.pick ?? document.activeElement?.id;
     el.innerHTML = `
       <div class="view-head">
-        <h1>Posso entrare adesso?</h1>
+        <h1>Posso entrare?</h1>
       </div>
-      ${heroHtml(zone, now)}
-      ${chipsHtml(zone, now)}
+      ${heroHtml(zone)}
+      ${chipsHtml(zone)}
       <p class="loc-note" id="loc-note" role="status">${esc(locationNote)}</p>
       <div class="bento">
         <button type="button" class="tile violet" id="locate"><span class="ico">${ICON.pin}</span><div><b>Dove sono?</b><br><span>Ti dico in che zona sei</span></div></button>
         <a class="tile pink" href="#/chiedi"><span class="ico">${ICON.chat}</span><div><b>Chiedi all'AI</b><br><span>"Area C domani alle 8?"</span></div></a>
-        <a class="tile yellow" href="#/veicolo"><span class="ico">${ICON.car}</span><div><b>La mia auto</b><br><span>Dove può entrare</span></div></a>
-        <a class="tile" style="background:var(--lez)" href="#/mappa"><span class="ico">${ICON.map}</span><div><b>Mappa live</b><br><span>Scorri le ore</span></div></a>
+        <a class="tile yellow" href="#/mappa?cerca=1"><span class="ico">${ICON.search}</span><div><b>Cerca una via</b><br><span>E scopri se ci entri</span></div></a>
+        <a class="tile" style="background:var(--lez)" href="#/mappa"><span class="ico">${ICON.map}</span><div><b>Mappa live</b><br><span>Colorata per la tua auto</span></div></a>
       </div>
       <section class="section">
-        <div class="section-head"><h2>Tutte le zone</h2><span class="small muted">si aggiorna da sola</span></div>
-        ${listHtml(now)}
+        <div class="section-head"><h2>I miei posti</h2></div>
+        ${placesHtml()}
+      </section>
+      <section class="section">
+        <div class="section-head"><h2>Tutte le zone</h2><span class="small muted">${esc(whenLabel())}, ${esc(vehicleLabel(getVehicle()))}</span></div>
+        ${listHtml()}
       </section>`;
     el.querySelector('#locate').addEventListener('click', onLocate);
+    el.querySelector('#pick-when').addEventListener('click', () => openWhenPicker());
+    el.querySelectorAll('details.group').forEach((d) =>
+      d.addEventListener('toggle', () => (d.open ? openGroups.add(d.dataset.group) : openGroups.delete(d.dataset.group))),
+    );
     el.querySelectorAll('[data-pick]').forEach((b) =>
       b.addEventListener('click', () => { heroId = b.dataset.pick; draw(); }),
     );
-    if (focusId) (el.querySelector(`[data-pick="${focusId}"]`) ?? el.querySelector(`#${CSS.escape(focusId)}`))?.focus({ preventScroll: true });
+    if (focusId) (el.querySelector(`[data-pick="${CSS.escape(focusId)}"]`) ?? el.querySelector(`#${CSS.escape(focusId)}`))?.focus({ preventScroll: true });
   };
 
   async function onLocate() {
@@ -138,7 +180,7 @@ export function render(el) {
   }
 
   draw();
-  // ogni secondo: solo il conto alla rovescia; al cambio di stato ridisegna tutto
+  const off = onChange(draw);
   const tick = setInterval(() => {
     const now = new Date();
     el.querySelectorAll('[data-clock]').forEach((s) => {
@@ -148,5 +190,5 @@ export function render(el) {
     });
   }, 1000);
   const full = setInterval(draw, 60000);
-  return () => { clearInterval(tick); clearInterval(full); };
+  return () => { off(); clearInterval(tick); clearInterval(full); };
 }

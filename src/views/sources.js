@@ -15,7 +15,7 @@ export function render(el) {
     <section class="section card">
       <h2>Come leggere queste informazioni</h2>
       <p>Dati verificati il ${esc(updated)}. Le regole possono cambiare per ordinanza (eventi, cantieri, emergenze smog). Prima di entrare fa fede la segnaletica sul posto e la pagina ufficiale del Comune.</p>
-      <p>Mappa: confini delle zone dagli Open Data del Comune di Milano; base cartografica © OpenStreetMap e CARTO.</p>
+      <p>Mappa: confini delle zone dagli Open Data del Comune di Milano; base cartografica © OpenStreetMap.</p>
       <p class="small muted">App non ufficiale, realizzata per informare. Non è collegata al Comune di Milano.</p>
     </section>`;
 }

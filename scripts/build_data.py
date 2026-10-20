@@ -106,6 +106,10 @@ zones.append({
     'freeFor': ['elettrico'],
     'freeNote': 'Entrano gratis i veicoli elettrici, le auto ibride con CO2 fino a 100 g/km, le moto non vietate e chi ha il contrassegno disabili (con targa registrata).',
     'fuelNotes': {'ibrido': 'Se la tua auto ibrida emette fino a 100 g/km di CO2 (voce V.7 del libretto) entri gratis.'},
+    'permitNotes': {
+        'residente': {'verdict': 'pagamento', 'text': 'Da residente in Area C hai 50 ingressi gratis all\'anno (con registrazione), poi paghi 3 € invece di 7,50 €.'},
+        'cude': {'verdict': 'dipende', 'text': 'Con il contrassegno disabili (CUDE), il titolare a bordo e la targa registrata entri senza pagare.'},
+    },
     'uncertainFuels': ['gpl', 'metano'],
     'vehicleBans': [
         {'fuel': ['benzina'], 'maxEuro': 2, 'since': None, 'label': 'Benzina Euro 0, 1 e 2'},
@@ -149,6 +153,9 @@ zones.append({
     'exitNote': 'Le telecamere leggono le targhe in entrata, ma un veicolo vietato non può circolare all\'interno né verso l\'esterno dalle 7:30 alle 19:30.',
     'gates': '186 varchi d\'accesso.',
     'uncertainFuels': ['gpl', 'metano'],
+    'permitNotes': {
+        'cude': {'verdict': 'dipende', 'text': 'Con il contrassegno disabili rilasciato dal Comune di Milano e il titolare a bordo entri anche con un veicolo vietato; se è rilasciato da un altro Comune serve la registrazione.'},
+    },
     'vehicleBans': [
         {'fuel': ['benzina'], 'maxEuro': 2, 'since': None, 'label': 'Benzina Euro 0, 1 e 2'},
         {'fuel': ['diesel'], 'maxEuro': 5, 'since': None, 'label': 'Diesel da Euro 0 a Euro 5'},

@@ -9,6 +9,31 @@ const isoDayOf = (date) => {
   return `${p.year}-${pad(p.month)}-${pad(p.day)}`;
 };
 
+// Permessi: rendono "condizionale" un divieto, non lo trasformano mai in un sì.
+const DEFAULT_PERMIT = {
+  ztl: {
+    cude: { verdict: 'dipende', text: 'Con il contrassegno disabili (CUDE) e il titolare a bordo di solito puoi entrare, se la targa è registrata per questa zona.' },
+    residente: { verdict: 'dipende', text: 'Se sei residente o dimorante in questa zona e hai il pass, puoi entrare.' },
+  },
+  pedonale: {
+    cude: { verdict: 'dipende', text: 'Con il contrassegno disabili (CUDE) l\'accesso dipende dalle deroghe dell\'area: controlla il cartello o chiedi al Comune.' },
+    residente: { verdict: 'dipende', text: 'Se sei residente e l\'area prevede la deroga per i residenti, puoi entrare: controlla il cartello.' },
+  },
+};
+
+function applyPermits(zone, v, vehicle) {
+  const notes = [];
+  if (v.verdict !== 'no' && v.verdict !== 'pagamento') return notes;
+  for (const p of vehicle?.permits ?? []) {
+    const note = zone.permitNotes?.[p] ?? DEFAULT_PERMIT[zone.type]?.[p];
+    if (!note) continue;
+    notes.push(note.text);
+    const rank = { no: 0, pagamento: 1, dipende: 2 };
+    if (v.verdict in rank && note.verdict in rank && rank[note.verdict] > rank[v.verdict]) v.verdict = note.verdict;
+  }
+  return notes;
+}
+
 const VERDICT_LABEL = {
   si: 'Sì.',
   pagamento: 'Sì, ma a pagamento.',
@@ -113,7 +138,7 @@ function accessLines(zone, status, when, now, v, vehicle) {
     if (v.verdict === 'pagamento' && (zone.paymentShort ?? zone.payment)) lines.push(zone.paymentShort ?? zone.payment);
     if (v.free) lines.push(zone.freeNote ?? 'Il tuo veicolo entra senza pagare.');
     if (vehicle?.fuel && zone.fuelNotes?.[vehicle.fuel]) lines.push(zone.fuelNotes[vehicle.fuel]);
-    if (v.verdict === 'dipende') {
+    if (v.verdict === 'dipende' && v.check.result === 'unknown' && zone.vehicleBans?.length) {
       lines.push(`Sono vietati: ${describeBans(zone, when)}. Dimmi alimentazione e classe Euro (es. "diesel Euro 5") per una risposta precisa.`);
     }
     if (v.verdict === 'no' && v.check.ban) lines.push(`Il tuo veicolo rientra nel divieto: ${v.check.ban.label}.`);
@@ -170,6 +195,7 @@ export function answerQuestion(question, now, ctx) {
   }
 
   const v = accessVerdict(zone, status, vehicle, q.when);
-  const detail = accessLines(zone, status, q.when, now, v, vehicle).join(' ') + caveat;
+  const permitLines = status.active ? applyPermits(zone, v, vehicle) : [];
+  const detail = [...accessLines(zone, status, q.when, now, v, vehicle), ...permitLines].join(' ') + caveat;
   return { ...base, verdict: v.verdict, text: `${VERDICT_LABEL[v.verdict]} ${detail}`, detail, status, vehicle: vehicle ?? null };
 }

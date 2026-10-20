@@ -8,7 +8,8 @@ export function sanitizeVehicle(v) {
   if (!v || typeof v !== 'object' || !FUELS.has(v.fuel)) return null;
   const euro = Number.isInteger(v.euro) && v.euro >= 0 && v.euro <= 6 ? v.euro : null;
   const euro6 = euro === 6 && (v.euro6 === 'abc' || v.euro6 === 'd') ? v.euro6 : null;
-  return { fuel: v.fuel, euro, euro6 };
+  const permits = Array.isArray(v.permits) ? v.permits.filter((p) => p === 'cude' || p === 'residente') : [];
+  return { fuel: v.fuel, euro, euro6, permits };
 }
 
 function parseBody(body) {

@@ -51,6 +51,16 @@ export const zones = [
     "fuelNotes": {
       "ibrido": "Se la tua auto ibrida emette fino a 100 g/km di CO2 (voce V.7 del libretto) entri gratis."
     },
+    "permitNotes": {
+      "residente": {
+        "verdict": "pagamento",
+        "text": "Da residente in Area C hai 50 ingressi gratis all'anno (con registrazione), poi paghi 3 € invece di 7,50 €."
+      },
+      "cude": {
+        "verdict": "dipende",
+        "text": "Con il contrassegno disabili (CUDE), il titolare a bordo e la targa registrata entri senza pagare."
+      }
+    },
     "uncertainFuels": [
       "gpl",
       "metano"
@@ -220,6 +230,12 @@ export const zones = [
       "gpl",
       "metano"
     ],
+    "permitNotes": {
+      "cude": {
+        "verdict": "dipende",
+        "text": "Con il contrassegno disabili rilasciato dal Comune di Milano e il titolare a bordo entri anche con un veicolo vietato; se è rilasciato da un altro Comune serve la registrazione."
+      }
+    },
     "vehicleBans": [
       {
         "fuel": [

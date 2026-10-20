@@ -4,6 +4,7 @@ const dayFmt = new Intl.DateTimeFormat('it-IT', { timeZone: TZ, weekday: 'long',
 const timeFmt = new Intl.DateTimeFormat('it-IT', { timeZone: TZ, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
 
 export const formatDay = (date) => dayFmt.format(date);
+export const TZ_SHORT = new Intl.DateTimeFormat('it-IT', { timeZone: TZ, weekday: 'short', day: 'numeric', month: 'short' });
 export const formatTime = (date) => timeFmt.format(date);
 export const formatWhen = (date) => `${formatDay(date)} alle ${formatTime(date)}`;
 
