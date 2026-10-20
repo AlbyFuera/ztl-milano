@@ -19,6 +19,8 @@ export default defineConfig({
   projects: [
     { name: 'mobile-chrome', use: { ...devices['Pixel 7'] } },
     { name: 'small-phone', use: { ...devices['Pixel 7'], viewport: { width: 360, height: 640 } }, grep: /@layout/ },
+    // iPhone (Safari/WebKit): service worker e modalità offline si verificano su Chrome
+    { name: 'iphone-safari', use: { ...devices['iPhone 14'] }, grepInvert: /PWA|offline/ },
   ],
   webServer: BASE_URL
     ? undefined
