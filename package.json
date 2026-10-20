@@ -1,0 +1,26 @@
+{
+  "name": "ztl-milano",
+  "version": "1.0.0",
+  "description": "ZTL Milano: Area C, Area B e ZTL su mappa, orari, multe e assistente",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4173",
+    "test": "vitest run",
+    "test:e2e": "playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@playwright/test": "1.48",
+    "vite": "^5.4.21",
+    "vite-plugin-pwa": "^0.20.5",
+    "vitest": "^2.1.9"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4"
+  },
+  "private": true
+}
