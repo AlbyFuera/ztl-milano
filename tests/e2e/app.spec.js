@@ -145,7 +145,12 @@ test('PWA: manifest valido, icone raggiungibili, service worker attivo', async (
   expect(manifest.display).toBe('standalone');
   expect(manifest.icons.map((i) => i.sizes)).toEqual(expect.arrayContaining(['192x192', '512x512']));
   for (const icon of manifest.icons) expect((await request.get(icon.src)).status()).toBe(200);
-  const sw = await page.evaluate(async () => (await navigator.serviceWorker.ready).active?.state);
+  const sw = await page.evaluate(async () => {
+    const reg = await navigator.serviceWorker.ready;
+    const w = reg.active;
+    if (w.state !== 'activated') await new Promise((r) => w.addEventListener('statechange', () => w.state === 'activated' && r()));
+    return w.state;
+  });
   expect(sw).toBe('activated');
 });
 
@@ -221,4 +226,12 @@ test('veicolo: nome e permesso compaiono nella frase della home', async ({ page 
   await page.getByRole('button', { name: 'Salva veicolo' }).click();
   await page.goto('/#/adesso');
   await expect(page.getByRole('link', { name: /Cambia veicolo/ })).toContainText('Golf');
+});
+
+test('mappa: uscire subito mentre i perimetri caricano non genera errori', async ({ page }) => {
+  await page.route('**/geo/*.geojson', async (route) => { await new Promise((r) => setTimeout(r, 800)); await route.continue(); });
+  await page.goto('/#/mappa');
+  await page.locator('.tabbar').getByRole('link', { name: 'Chiedi' }).click();
+  await page.waitForTimeout(1500);
+  await expect(page.getByRole('heading', { name: 'Chiedi' })).toBeVisible();
 });

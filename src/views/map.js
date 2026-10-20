@@ -99,6 +99,7 @@ export function render(el, params) {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   }).addTo(map);
 
+  let disposed = false; // la vista può chiudersi mentre i dati sono ancora in arrivo
   const layers = new Map();
   const selectedDate = () => {
     const d = days[dayOffset];
@@ -164,7 +165,7 @@ export function render(el, params) {
     placeMarker?.remove();
     placeMarker = L.circleMarker([place.lat, place.lng], { radius: 10, color: '#17131f', weight: 3, fillColor: '#ff8bd0', fillOpacity: 1 }).addTo(map);
     const { inside } = await locate(place.lat, place.lng, zones);
-    if (openPlace !== place) return;
+    if (disposed || openPlace !== place) return;
     place.zones = inside.map((z) => z.id);
     const when = selectedDate();
     const v = getVehicle();
@@ -197,6 +198,7 @@ export function render(el, params) {
   const msg = el.querySelector('#map-msg');
   const sorted = [...zones].sort((a, b) => (ORDER[a.type] ?? 9) - (ORDER[b.type] ?? 9));
   Promise.all(sorted.map((z) => loadZoneGeo(z).then((fc) => [z, fc]))).then((pairs) => {
+    if (disposed) return;
     const withGeo = pairs.filter(([z]) => z.geo);
     for (const [zone, fc] of withGeo) {
       if (!fc) continue;
@@ -234,6 +236,7 @@ export function render(el, params) {
     paintResults('<li class="small muted" style="padding:10px 12px">Cerco…</li>');
     try {
       found = await searchPlaces(q, ctrl.signal);
+      if (disposed) return;
       paintResults(found.length
         ? found.map((r, i) => `<li><button type="button" data-r="${i}">${esc(r.label)}<span class="sub">${esc(r.sub)}</span></button></li>`).join('')
         : '<li class="small muted" style="padding:10px 12px">Nessun risultato a Milano. Prova con via e numero civico.</li>');
@@ -288,7 +291,7 @@ export function render(el, params) {
     gates = L.layerGroup().addTo(map);
     for (const z of zones.filter((x) => x.gatesGeo)) {
       const fc = await fetch(z.gatesGeo).then((r) => (r.ok ? r.json() : null)).catch(() => null);
-      if (!fc || !gates) continue;
+      if (disposed || !fc || !gates) continue;
       L.geoJSON(fc, {
         pointToLayer: (f, ll) => L.circleMarker(ll, { radius: 5, color: '#17131f', weight: 2, fillColor: z.type === 'lez' ? COLOR.lez : COLOR.pay, fillOpacity: 1 }),
         onEachFeature: (f, layer) => layer.bindTooltip(`Varco ${z.name}${f.properties?.nome || f.properties?.label ? `: ${f.properties.nome ?? f.properties.label}` : ''}`),
@@ -302,6 +305,7 @@ export function render(el, params) {
     if (!('geolocation' in navigator)) { msg.innerHTML = '<p class="notice">Posizione non disponibile su questo dispositivo.</p>'; return; }
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
+        if (disposed) return;
         msg.innerHTML = '';
         const ll = [coords.latitude, coords.longitude];
         me?.remove();
@@ -324,6 +328,6 @@ export function render(el, params) {
     }
     refresh();
   });
-  setTimeout(() => map.invalidateSize(), 0);
-  return () => { off(); ctrl?.abort(); map.remove(); el.classList.remove('full'); };
+  setTimeout(() => { if (!disposed) map.invalidateSize(); }, 0);
+  return () => { disposed = true; off(); ctrl?.abort(); clearTimeout(timer); map.remove(); el.classList.remove('full'); };
 }
