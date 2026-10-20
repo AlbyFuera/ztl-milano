@@ -6,7 +6,16 @@ const DUOMO = { latitude: 45.4641, longitude: 9.1919 };
 test.beforeEach(async ({ page }) => {
   page.errors = [];
   page.on('pageerror', (e) => page.errors.push(e.message));
-  page.on('console', (m) => { if (m.type() === 'error' && !/favicon|tiles|cartocdn/.test(m.text())) page.errors.push(m.text()); });
+  page.on('console', (m) => {
+    if (m.type() !== 'error') return;
+    const where = m.location()?.url ?? '';
+    // in locale (vite preview) /api non esiste: l'app passa da sola al motore nel browser
+    if (!REMOTE && /\/api\/ask/.test(where + m.text())) return;
+    if (/tile\.openstreetmap|favicon/.test(where + m.text())) return;
+    page.errors.push(`${m.text()} @ ${where}`);
+  });
+  if (!REMOTE) await page.route('**/api/ask', (route) => route.fulfill({ status: 404, body: 'not found' }));
+  await page.route('https://tile.openstreetmap.org/**', (route) => route.fulfill({ status: 204, body: '' }));
 });
 test.afterEach(async ({ page }) => {
   expect(page.errors, 'errori in console').toEqual([]);
@@ -19,8 +28,8 @@ test('home: stato live di tutte le zone', async ({ page }) => {
   const rows = page.locator('.zone-list .zone-row');
   expect(await rows.count()).toBeGreaterThanOrEqual(4);
   expect(await page.locator('details.group').count()).toBe(2);
-  await expect(page.locator('.zone-list')).toContainText('Area C');
-  await expect(page.locator('.zone-list')).toContainText('Area B');
+  await expect(page.locator('.zone-list').first()).toContainText('Area C');
+  await expect(page.locator('.zone-list').first()).toContainText('Area B');
 });
 
 test('tab bar: ogni sezione si apre e si evidenzia', async ({ page }) => {
@@ -47,7 +56,7 @@ test('scheda zona: Area C con orari e fonti ufficiali', async ({ page }) => {
   const links = page.locator('.sources a');
   expect(await links.count()).toBeGreaterThan(0);
   for (const href of await links.evaluateAll((as) => as.map((a) => a.href))) {
-    expect(href).toMatch(/comune\.milano\.it|amat-mi\.it|normattiva\.it|gazzettaufficiale\.it/);
+    expect(href).toMatch(/comune\.milano\.it|amat-mi\.it|areac\.atm-mi\.it|areab\.atm\.it|normattiva\.it|gazzettaufficiale\.it/);
   }
 });
 
@@ -86,7 +95,7 @@ test('mappa: disegna le zone e lo slider cambia orario', async ({ page }) => {
   if (await sunday.count()) await sunday.click();
   await page.locator('#time-range').fill('720');
   await expect(label).toContainText('12:00');
-  await expect(page.locator('#active-count')).toContainText('zone attive');
+  await expect(page.locator('#active-count')).toContainText(/attive su \d+/);
 });
 
 test('mappa: tocco su una zona apre la scheda', async ({ page }) => {

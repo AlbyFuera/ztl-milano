@@ -51,6 +51,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html, body { margin: 0; }
 body {
   background: var(--bg);
@@ -114,7 +115,7 @@ p { margin: 0; }
 .tabbar a:active { transform: scale(0.94); }
 
 main {
-  max-width: 640px; margin: 0 auto;
+  max-width: 640px; margin: 0 auto; overflow-x: clip;
   padding: 8px 16px calc(var(--tab-h) + var(--safe-b) + 40px);
   outline: none;
 }
@@ -280,7 +281,7 @@ details.group .zone-list { padding: 0 10px 12px; }
 .zone-hero .sign { width: 96px; border-width: 12px; transform: rotate(-8deg); }
 
 /* ---------- Mappa ---------- */
-.map-wrap { position: relative; height: calc(100dvh - 64px - var(--safe-t)); }
+.map-wrap { isolation: isolate; position: relative; height: calc(100dvh - 64px - var(--safe-t)); }
 #map { position: absolute; inset: 0; background: var(--bg); }
 .map-panel {
   position: absolute; left: 12px; right: 12px; bottom: calc(var(--tab-h) + var(--safe-b) + 22px); z-index: 500;
@@ -371,8 +372,8 @@ details.group .zone-list { padding: 0 10px 12px; }
 }
 fieldset { border: 0; padding: 0; margin: 0; }
 .seg { display: flex; flex-wrap: wrap; gap: 8px; }
-.seg label { cursor: pointer; }
-.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label { cursor: pointer; position: relative; }
+.field .seg input, .seg input { position: absolute; inset: 0; width: 1px; height: 1px; min-height: 0; padding: 0; margin: 0; opacity: 0; pointer-events: none; }
 .seg span { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 2px solid var(--edge); background: var(--surface); font-weight: 700; }
 .seg input:checked + span { background: var(--go); color: var(--on-color); box-shadow: var(--pop-sm); }
 .seg input:focus-visible + span { outline: 3px solid var(--brand); outline-offset: 2px; }

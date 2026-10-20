@@ -79,7 +79,7 @@ function intervals(zone, fromYmd, days) {
 const HORIZON_DAYS = 21;
 
 const UNKNOWN_REASON = 'orari non disponibili nelle fonti ufficiali consultate';
-const DAY_NAMES = ['il lunedì', 'il martedì', 'il mercoledì', 'il giovedì', 'il venerdì', 'il sabato', 'la domenica'];
+const DAY_NAMES = ['lunedì', 'martedì', 'mercoledì', 'giovedì', 'venerdì', 'sabato', 'domenica'];
 
 export function isActiveAt(zone, date) {
   if (zone.scheduleUnknown) return null;
@@ -111,7 +111,7 @@ export function zoneStatus(zone, date) {
   }
   const next = list.find(([a]) => a > t);
   const off = dayOffReason(zone, p);
-  const reason = off ?? (todayWindows.length ? 'fuori dalla fascia oraria' : `${DAY_NAMES[p.weekday - 1]} non è attiva`);
+  const reason = off ?? (todayWindows.length ? 'è fuori orario' : `è ${DAY_NAMES[p.weekday - 1]}`);
   return { active: false, reason, nextChange: next ? new Date(next[0]) : null, todayWindows, currentWindow: null };
 }
 

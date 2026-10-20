@@ -110,6 +110,6 @@ describe('zone con orario non confermato', () => {
 describe('motivo quando la zona è spenta tutto il giorno', () => {
   it('nomina il giorno della settimana invece di "oggi"', () => {
     const s = zoneStatus(feriale, romeDate(2026, 10, 25, 12, 0)); // domenica
-    expect(s.reason).toBe('la domenica non è attiva');
+    expect(s.reason).toBe('è domenica');
   });
 });
